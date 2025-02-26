@@ -19,11 +19,12 @@ model Post {
 }
 
 model Profile {
-  id     Int    @id @default(autoincrement())
-  bio    String?
-  image  Bytes? 
-  userId Int    @unique
-  user   User   @relation(fields: [userId], references: [id])
+  id        Int    @id @default(autoincrement())
+  bio       String?
+  image     Bytes? 
+  userId    Int    @unique
+  user      User   @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())  
 }
 
 enum Role {
