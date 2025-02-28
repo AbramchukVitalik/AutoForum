@@ -1,0 +1,8 @@
+.background {
+	background-image: url('../resources/background.jpg'); /* Укажите путь к вашей картинке */
+	background-size: cover; /* Картинка будет покрывать весь элемент */
+	background-position: center; /* Центрирование картинки */
+	background-repeat: no-repeat; /* Отключение повторения */
+	height: 100%; /* Высота элемента */
+	width: 100%; /* Ширина элемента */
+}

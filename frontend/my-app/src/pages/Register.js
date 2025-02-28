@@ -4,10 +4,11 @@ import axios from 'axios'
 import '../css/Login.css'
 import { useNavigate } from 'react-router-dom'
 
-const Login = () => {
+const Register = () => {
 	const [values, setValues] = useState({
 		email: '',
 		password: '',
+		nickname: '',
 	})
 	const [message, setMessage] = useState(null)
 
@@ -20,9 +21,9 @@ const Login = () => {
 	const handleSubmit = async e => {
 		e.preventDefault()
 		axios
-			.post('http://localhost:5000/api/login', values)
+			.post('http://localhost:5000/api/register', values)
 			.then(response => {
-				navigate('/')
+				navigate('/login')
 			})
 			.catch(error => {
 				setMessage(
@@ -44,8 +45,18 @@ const Login = () => {
 			>
 				<Card.Body>
 					<Stack gap={3} className='col-md-10 mx-auto'>
-						<h2 className='text-center'>Вход</h2>
+						<h2 className='text-center'>Регистрация</h2>
 						<Form onSubmit={handleSubmit}>
+							<Form.Group controlId='formEmail'>
+								<Form.Label>Никнейм</Form.Label>
+								<Form.Control
+									name='nickname'
+									type='text'
+									placeholder='Введите никнейм'
+									value={values.nickname}
+									onChange={handleChanges}
+								/>
+							</Form.Group>
 							<Form.Group controlId='formEmail'>
 								<Form.Label>Email адрес</Form.Label>
 								<Form.Control
@@ -67,7 +78,7 @@ const Login = () => {
 								/>
 							</Form.Group>
 							<Button className='w-100 mt-3' variant='secondary' type='submit'>
-								Войти
+								Зарегистрироваться
 							</Button>
 						</Form>
 						{message && (
@@ -82,4 +93,4 @@ const Login = () => {
 	)
 }
 
-export default Login
+export default Register

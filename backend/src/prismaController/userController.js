@@ -26,7 +26,15 @@ export const createUser = async (req, res) => {
 
 		res.status(201).json(newUser)
 	} catch (error) {
-		res.status(500).json({ error: error.message })
+		if (
+			error.code === 'P2002' &&
+			error.meta &&
+			error.meta.target.includes('email')
+		) {
+			res.status(409).json({ error: 'Email уже существует' })
+		} else {
+			res.status(500).json({ error: error.message })
+		}
 	}
 }
 

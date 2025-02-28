@@ -1,9 +1,16 @@
 .outer {
 	display: flex;
-	justify-content: center; /*Центрирование по горизонтали*/
+	justify-content: center; /* Центрирование по горизонтали */
+	align-items: center; /* Центрирование по вертикали */
+	height: 100vh; /* Задаем высоту контейнера */
+}
 
-	position: relative;
-	top: 50vh;
-	left: 0;
-	transform: translate(0, -50%);
+.login-card {
+	width: 90vh;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Добавляем тень */
+	padding: 20px; /* Отступы */
+}
+
+.text-center {
+	color: #333; /* Цвет текста */
 }
