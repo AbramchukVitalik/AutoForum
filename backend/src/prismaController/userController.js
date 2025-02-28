@@ -38,18 +38,20 @@ export const loginUser = async (req, res) => {
 			where: { email },
 		})
 
+		console.log(user)
+
 		if (!user) {
-			return res.status(401).json({ error: 'Invalid email or password' })
+			return res.status(401).json({ error: 'Неправильный email' })
 		}
 
 		const isPasswordValid = await bcrypt.compare(password, user.password)
 		if (!isPasswordValid) {
-			return res.status(401).json({ error: 'Invalid email or password' })
+			return res.status(401).json({ error: 'Неправильный пароль' })
 		}
 
 		// Здесь вы можете создать токен для авторизации пользователя, например JWT, и отправить его пользователю.
 
-		res.status(200).json({ message: 'Login successful', user })
+		res.status(200).json({ message: 'Вход успешен', user })
 	} catch (error) {
 		res.status(500).json({ error: error.message })
 	}
