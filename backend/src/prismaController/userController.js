@@ -2,6 +2,13 @@ import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
+import { v4 as uuidv4 } from 'uuid'
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
+import path from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const prisma = new PrismaClient()
 
@@ -22,7 +29,6 @@ export const createUser = async (req, res) => {
 				nickname,
 				password: hashedPassword,
 				role: 'USER',
-				profile: { create: { bio, image } },
 			},
 		})
 
@@ -93,7 +99,14 @@ export const getUsers = async (req, res) => {
 export const updateUser = async (req, res) => {
 	try {
 		const { id } = req.params
-		const { email, nickname, password, bio, image } = req.body
+		const { email, nickname, password, bio } = req.body
+
+		let fileName = null
+		if (req.files && req.files.image) {
+			const image = req.files.image
+			fileName = uuidv4() + '.jpg'
+			image.mv(path.resolve(__dirname + '../../../static/' + fileName))
+		}
 
 		const updatedUser = await prisma.user.update({
 			where: { id: parseInt(id) },
@@ -101,7 +114,7 @@ export const updateUser = async (req, res) => {
 				email,
 				nickname,
 				password,
-				profile: { update: { bio, image } },
+				profile: { update: { bio, image: fileName } },
 			},
 		})
 
