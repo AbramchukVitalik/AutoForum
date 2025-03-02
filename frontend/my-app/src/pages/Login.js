@@ -3,6 +3,7 @@ import { Button, Form, Card, Stack } from 'react-bootstrap'
 import axios from 'axios'
 import '../css/Login.css'
 import { useNavigate } from 'react-router-dom'
+import { jwtDecode } from 'jwt-decode'
 
 const Login = () => {
 	const [values, setValues] = useState({
@@ -22,6 +23,14 @@ const Login = () => {
 		axios
 			.post('http://localhost:5000/api/login', values)
 			.then(response => {
+				const token = response.data.token // Получение токена из ответа сервера
+				localStorage.setItem('token', token) // Сохранение токена в localStorage
+
+				if (token) {
+					const decoded = jwtDecode(token)
+					console.log('Decoded token:', decoded)
+				}
+
 				navigate('/')
 			})
 			.catch(error => {

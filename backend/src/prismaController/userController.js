@@ -1,5 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+import crypto from 'crypto'
 
 const prisma = new PrismaClient()
 
@@ -57,7 +59,18 @@ export const loginUser = async (req, res) => {
 			return res.status(401).json({ error: 'Неправильный пароль' })
 		}
 
-		// Здесь вы можете создать токен для авторизации пользователя, например JWT, и отправить его пользователю.
+		const secretKey = crypto.randomBytes(32).toString('hex')
+
+		const token = jwt.sign({ userId: user.id, role: user.role }, secretKey, {
+			expiresIn: '1h',
+		})
+		jwt.verify(token, secretKey, (err, decoded) => {
+			if (err) {
+				console.log('Token is not valid')
+			} else {
+				console.log('Decoded token:', decoded)
+			}
+		})
 
 		res.status(200).json({ message: 'Вход успешен', user })
 	} catch (error) {
