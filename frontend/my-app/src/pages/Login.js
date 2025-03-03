@@ -24,14 +24,23 @@ const Login = () => {
 			.post('http://localhost:5000/api/login', values)
 			.then(response => {
 				const token = response.data.token // Получение токена из ответа сервера
-				localStorage.setItem('token', token) // Сохранение токена в localStorage
+				console.log('Received token:', token) // Логирование токена
 
-				if (token) {
-					const decoded = jwtDecode(token)
-					console.log('Decoded token:', decoded)
+				if (isValidToken(token)) {
+					localStorage.setItem('token', token) // Сохранение токена в localStorage
+
+					// Проверка сохранения токена в localStorage
+					const storedToken = localStorage.getItem('token')
+
+					if (storedToken) {
+						const decoded = jwtDecode(storedToken)
+						console.log('Decoded token:', decoded)
+					}
+
+					navigate('/')
+				} else {
+					console.error('Invalid token format')
 				}
-
-				navigate('/')
 			})
 			.catch(error => {
 				setMessage(
@@ -40,6 +49,10 @@ const Login = () => {
 						: 'Ошибка при отправке данных'
 				)
 			})
+	}
+
+	function isValidToken(token) {
+		return /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+/=]*$/.test(token)
 	}
 
 	return (

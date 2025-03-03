@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import crypto from 'crypto'
 import { v4 as uuidv4 } from 'uuid'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
@@ -29,6 +28,11 @@ export const createUser = async (req, res) => {
 				nickname,
 				password: hashedPassword,
 				role: 'USER',
+				profile: {
+					create: {
+						image: 'basePhoto.jpg',
+					},
+				},
 			},
 		})
 
@@ -65,9 +69,9 @@ export const loginUser = async (req, res) => {
 			return res.status(401).json({ error: 'Неправильный пароль' })
 		}
 
-		const secretKey = crypto.randomBytes(32).toString('hex')
+		const secretKey = process.env.SECRET_KEY
 
-		const token = jwt.sign({ userId: user.id, role: user.role }, secretKey, {
+		const token = jwt.sign({ id: user.id, role: user.role }, secretKey, {
 			expiresIn: '1h',
 		})
 		jwt.verify(token, secretKey, (err, decoded) => {
@@ -78,7 +82,7 @@ export const loginUser = async (req, res) => {
 			}
 		})
 
-		res.status(200).json({ message: 'Вход успешен', user })
+		res.status(200).json({ message: 'Вход успешен', token })
 	} catch (error) {
 		res.status(500).json({ error: error.message })
 	}
@@ -91,6 +95,26 @@ export const getUsers = async (req, res) => {
 		})
 
 		res.status(200).json(users)
+	} catch (error) {
+		res.status(500).json({ error: error.message })
+	}
+}
+
+export const getUserImage = async (req, res) => {
+	try {
+		const { id } = req.params
+		const user = await prisma.user.findUnique({
+			where: { id: parseInt(id) },
+			include: {
+				profile: true, // Загрузка связанных данных профиля
+			},
+		})
+
+		if (!user) {
+			return res.status(404).json({ error: 'User not found' })
+		}
+
+		res.status(200).json({ image: user.profile.image })
 	} catch (error) {
 		res.status(500).json({ error: error.message })
 	}
@@ -127,11 +151,24 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
 	try {
 		const { id } = req.params
-		const deletedUser = await prisma.user.delete({
-			where: { id: parseInt(id) },
+
+		const deleteUserTransaction = await prisma.$transaction(async prisma => {
+			await prisma.profile.deleteMany({
+				where: { userId: parseInt(id) },
+			})
+
+			await prisma.post.deleteMany({
+				where: { authorId: parseInt(id) },
+			})
+
+			const deletedUser = await prisma.user.delete({
+				where: { id: parseInt(id) },
+			})
+
+			return deletedUser
 		})
 
-		res.status(200).json(deletedUser)
+		res.status(200).json(deleteUserTransaction)
 	} catch (error) {
 		res.status(500).json({ error: error.message })
 	}
