@@ -100,7 +100,7 @@ export const getUsers = async (req, res) => {
 	}
 }
 
-export const getUserImage = async (req, res) => {
+export const getUser = async (req, res) => {
 	try {
 		const { id } = req.params
 		const user = await prisma.user.findUnique({
@@ -114,7 +114,7 @@ export const getUserImage = async (req, res) => {
 			return res.status(404).json({ error: 'User not found' })
 		}
 
-		res.status(200).json({ image: user.profile.image })
+		res.status(200).json({ user })
 	} catch (error) {
 		res.status(500).json({ error: error.message })
 	}

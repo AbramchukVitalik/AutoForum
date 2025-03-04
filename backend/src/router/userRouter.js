@@ -2,7 +2,7 @@ import { Router } from 'express'
 import {
 	createUser,
 	loginUser,
-	getUserImage,
+	getUser,
 	getUsers,
 	updateUser,
 	deleteUser,
@@ -13,7 +13,7 @@ const router = new Router()
 router.post('/register', createUser)
 router.post('/login', loginUser)
 router.get('/getUsers', getUsers)
-router.get('/getUserImage/:id', getUserImage)
+router.get('/getUser/:id', getUser)
 router.put('/updateUser/:id', updateUser)
 router.delete('/deleteUser/:id', deleteUser)
 

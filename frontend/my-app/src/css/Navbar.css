@@ -1,0 +1,31 @@
+.fixed-top {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1030; /* Убедитесь, что элемент находится поверх других элементов */
+}
+
+.custom-dropdown-toggle {
+	color: #ffffff; /* Цвет текста кнопки */
+}
+.custom-dropdown-toggle::after {
+	display: none;
+}
+
+.dropdown_item {
+	color: #ffffff;
+	background-color: #373d3f;
+}
+.dropdown_item_exit {
+	color: #e23030;
+	background-color: #373d3f;
+}
+
+.dropdown_item:hover {
+	color: #ffffff;
+	background-color: #33393b;
+}
+.dropdown_item_exit:hover {
+	color: #e23030;
+	background-color: #33393b;
+}
