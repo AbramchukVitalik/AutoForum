@@ -123,7 +123,7 @@ export const getUser = async (req, res) => {
 export const updateUser = async (req, res) => {
 	try {
 		const { id } = req.params
-		const { email, nickname, password, bio } = req.body
+		const { email, password, nickname, bio } = req.body
 
 		let fileName = null
 		if (req.files && req.files.image) {
@@ -132,14 +132,21 @@ export const updateUser = async (req, res) => {
 			image.mv(path.resolve(__dirname + '../../../static/' + fileName))
 		}
 
+		let hashedPassword = null
+		if (password) {
+			hashedPassword = await hashPassword(password)
+		}
+
+		const updateData = {}
+		if (email) updateData.email = email
+		if (hashedPassword) updateData.password = hashedPassword
+		if (nickname) updateData.nickname = nickname
+		if (bio) updateData.profile = { update: { bio: bio } }
+		if (fileName) updateData.profile = { update: { image: fileName } }
+
 		const updatedUser = await prisma.user.update({
 			where: { id: parseInt(id) },
-			data: {
-				email,
-				nickname,
-				password,
-				profile: { update: { bio, image: fileName } },
-			},
+			data: updateData,
 		})
 
 		res.status(200).json(updatedUser)

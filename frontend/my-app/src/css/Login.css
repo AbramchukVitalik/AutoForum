@@ -4,13 +4,30 @@
 	align-items: center; /* Центрирование по вертикали */
 	height: 100vh; /* Задаем высоту контейнера */
 }
+.outer-card {
+	display: flex;
+	justify-content: center; /* Центрирование по горизонтали */
+	height: 100vh; /* Задаем высоту контейнера */
+}
 
 .login-card {
 	width: 90vh;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Добавляем тень */
 	padding: 20px; /* Отступы */
 }
-
 .text-center {
 	color: #333; /* Цвет текста */
+}
+
+.card-center {
+	background-color: #ffffff; /* Белый фон карточки */
+	width: 90vw; /* Ширина карточки почти на всю страницу */
+	height: 150vh; /* Высота карточки почти на всю страницу */
+	max-width: 12000px; /* Максимальная ширина карточки */
+	padding: 20px; /* Внутренние отступы карточки */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Добавляем тень */
+	border-radius: 8px; /* Закругленные углы */
+
+	margin-top: 100px;
+	margin-bottom: 40px;
 }

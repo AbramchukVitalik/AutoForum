@@ -26,21 +26,17 @@ const Login = () => {
 				const token = response.data.token // Получение токена из ответа сервера
 				console.log('Received token:', token) // Логирование токена
 
-				if (isValidToken(token)) {
-					localStorage.setItem('token', token) // Сохранение токена в localStorage
+				localStorage.setItem('token', token) // Сохранение токена в localStorage
 
-					// Проверка сохранения токена в localStorage
-					const storedToken = localStorage.getItem('token')
+				// Проверка сохранения токена в localStorage
+				const storedToken = localStorage.getItem('token')
 
-					if (storedToken) {
-						const decoded = jwtDecode(storedToken)
-						console.log('Decoded token:', decoded)
-					}
-
-					navigate('/')
-				} else {
-					console.error('Invalid token format')
+				if (storedToken) {
+					const decoded = jwtDecode(storedToken)
+					console.log('Decoded token:', decoded)
 				}
+
+				navigate('/')
 			})
 			.catch(error => {
 				setMessage(
@@ -49,10 +45,6 @@ const Login = () => {
 						: 'Ошибка при отправке данных'
 				)
 			})
-	}
-
-	function isValidToken(token) {
-		return /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+/=]*$/.test(token)
 	}
 
 	return (
