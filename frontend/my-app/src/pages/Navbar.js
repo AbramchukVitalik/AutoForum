@@ -92,7 +92,10 @@ const CustomNavbar = () => {
 
 									<Dropdown.Menu style={{ backgroundColor: '#373D3F' }}>
 										<Container>
-											<Dropdown.Item href='/profile' className='dropdown_item'>
+											<Dropdown.Item
+												href={`/profile?id=${user.id}`}
+												className='dropdown_item'
+											>
 												<b>Профиль</b>
 											</Dropdown.Item>
 											<Dropdown.Item href='/settings' className='dropdown_item'>

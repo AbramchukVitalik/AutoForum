@@ -12,6 +12,7 @@ model Post {
   id        Int      @id @default(autoincrement())
   title     String
   content   String?
+  like      Int
   published Boolean  @default(false)
   authorId  Int
   author    User     @relation(fields: [authorId], references: [id])
@@ -22,6 +23,8 @@ model Profile {
   id        Int    @id @default(autoincrement())
   bio       String?
   image     String? 
+  postsNum  Int
+  like      Int
   userId    Int    @unique
   user      User   @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())  
