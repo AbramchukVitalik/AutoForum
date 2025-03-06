@@ -31,6 +31,8 @@ export const createUser = async (req, res) => {
 				profile: {
 					create: {
 						image: 'basePhoto.jpg',
+						postsNum: 0,
+						like: 0,
 					},
 				},
 			},
