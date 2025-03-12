@@ -5,7 +5,7 @@ model Forums {
   description       String
   numberOfTopics    Int
   numberOfMessages  Int
-  
+
   topics            Topics[]
 }
 
@@ -26,7 +26,6 @@ model Topics {
 model Messages {
   id          Int      @id @default(autoincrement())
 
-  title       String
   content     String?
   like        Int
   published   Boolean  @default(false)

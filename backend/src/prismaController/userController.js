@@ -47,6 +47,7 @@ export const createUser = async (req, res) => {
 		) {
 			res.status(409).json({ error: 'Email уже существует' })
 		} else {
+			console.error(error)
 			res.status(500).json({ error: error.message })
 		}
 	}
@@ -86,6 +87,7 @@ export const loginUser = async (req, res) => {
 
 		res.status(200).json({ message: 'Вход успешен', token })
 	} catch (error) {
+		console.error(error)
 		res.status(500).json({ error: error.message })
 	}
 }
@@ -98,6 +100,7 @@ export const getUsers = async (req, res) => {
 
 		res.status(200).json(users)
 	} catch (error) {
+		console.error(error)
 		res.status(500).json({ error: error.message })
 	}
 }
@@ -118,6 +121,7 @@ export const getUser = async (req, res) => {
 
 		res.status(200).json({ user })
 	} catch (error) {
+		console.error(error)
 		res.status(500).json({ error: error.message })
 	}
 }
@@ -153,6 +157,7 @@ export const updateUser = async (req, res) => {
 
 		res.status(200).json(updatedUser)
 	} catch (error) {
+		console.error(error)
 		res.status(500).json({ error: error.message })
 	}
 }
@@ -161,7 +166,7 @@ export const deleteUser = async (req, res) => {
 	try {
 		const { id } = req.params
 
-		const deleteUserTransaction = await prisma.$transaction(async prisma => {
+		const deleteUser = await prisma.$transaction(async prisma => {
 			await prisma.profile.deleteMany({
 				where: { userId: parseInt(id) },
 			})
@@ -170,15 +175,16 @@ export const deleteUser = async (req, res) => {
 				where: { authorId: parseInt(id) },
 			})
 
-			const deletedUser = await prisma.user.delete({
+			const dUser = await prisma.user.delete({
 				where: { id: parseInt(id) },
 			})
 
-			return deletedUser
+			return dUser
 		})
 
-		res.status(200).json(deleteUserTransaction)
+		res.status(200).json(deleteUser)
 	} catch (error) {
+		console.error(error)
 		res.status(500).json({ error: error.message })
 	}
 }
