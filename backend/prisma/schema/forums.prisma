@@ -1,0 +1,39 @@
+model Forums {
+  id                Int      @id @default(autoincrement())
+
+  title             String
+  description       String
+  numberOfTopics    Int
+  numberOfMessages  Int
+  
+  topics            Topics[]
+}
+
+model Topics {
+  id                Int      @id @default(autoincrement())
+
+  title             String
+  author            String
+  numberOfMessages  Int
+  numberOfViews     Int
+
+  messages          Messages[]
+
+  forumId           Int
+  forum             Forums   @relation(fields: [forumId], references: [id])
+}
+
+model Messages {
+  id          Int      @id @default(autoincrement())
+
+  title       String
+  content     String?
+  like        Int
+  published   Boolean  @default(false)
+  authorId    Int
+
+  topicsId    Int
+  topics      Topics   @relation(fields: [topicsId], references: [id])
+
+  createAt  DateTime @default(now()) 
+}

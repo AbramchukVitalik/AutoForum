@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Button, Card, Stack, Form, Image } from 'react-bootstrap'
 import { jwtDecode } from 'jwt-decode'
 import axios from 'axios'
+import '../css/Card.css'
 
 const Settings = () => {
 	const token = localStorage.getItem('token')
@@ -73,45 +74,23 @@ const Settings = () => {
 	}
 
 	return (
-		<div
-			className='outer-card'
-			style={{
-				display: 'flex',
-				justifyContent: 'center',
-				alignItems: 'center',
-				height: '100vh',
-			}}
-		>
-			<Card
-				className='card-center'
-				style={{
-					boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					width: '60%',
-					height: '80%',
-				}}
-			>
+		<div className='outer-card'>
+			<Card className='card-center'>
 				<Card.Body>
-					<Stack gap={3} style={{ alignItems: 'center', textAlign: 'center' }}>
+					<Stack gap={3} className='card-content'>
 						<h1>Изменение данных аккаунта</h1>
 						<Image
 							src={`http://localhost:5000/${user.profile.image}`}
 							roundedCircle
-							style={{
-								cursor: 'pointer',
-								width: '250px',
-								height: '250px',
-								display: 'flex',
-							}}
+							className='profile-image'
 						/>
 						<input type='file' onChange={handleFileChange} />
 
 						<Stack
 							direction='horizontal'
 							gap={3}
-							style={{ marginTop: '60px', marginBottom: '50px' }}
+							className='form-group'
+							style={{ marginTop: '10px', marginBottom: '10px' }}
 						>
 							<Form.Group controlId='formEmail'>
 								<Form.Label>Email адрес</Form.Label>
@@ -155,18 +134,14 @@ const Settings = () => {
 							</Form.Group>
 						</Stack>
 						<Button
-							className='w-50 mt-3'
+							className='submit-button'
 							variant='secondary'
 							type='submit'
 							onClick={e => handleSubmit(e)}
 						>
 							Изменить
 						</Button>
-						{message && (
-							<p className='text-center mt-3' style={{ color: 'green' }}>
-								{message}
-							</p>
-						)}
+						{message && <p className='message'>{message}</p>}
 					</Stack>
 				</Card.Body>
 			</Card>

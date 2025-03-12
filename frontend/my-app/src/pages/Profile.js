@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Card, Stack, Image } from 'react-bootstrap'
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
+import '../css/Card.css'
 
 const Profile = () => {
 	const token = localStorage.getItem('token')
@@ -37,45 +38,15 @@ const Profile = () => {
 	}
 
 	return (
-		<div
-			className='outer-card'
-			style={{
-				display: 'flex',
-				justifyContent: 'center',
-				alignItems: 'center',
-				height: '100vh',
-			}}
-		>
-			<Card
-				className='card-center'
-				style={{
-					boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					width: '60%',
-					height: '80%',
-				}}
-			>
+		<div className='outer-card'>
+			<Card className='card-center'>
 				<Card.Body>
-					<Stack
-						gap={3}
-						style={{
-							alignItems: 'center',
-							textAlign: 'center',
-							marginTop: '50px',
-						}}
-					>
+					<Stack gap={3} className='card-content'>
 						<h1>{user.nickname}</h1>
 						<Image
 							src={`http://localhost:5000/${user.profile.image}`}
 							roundedCircle
-							style={{
-								cursor: 'pointer',
-								width: '250px',
-								height: '250px',
-								display: 'flex',
-							}}
+							className='profile-image'
 						/>
 
 						{id !== userId &&
