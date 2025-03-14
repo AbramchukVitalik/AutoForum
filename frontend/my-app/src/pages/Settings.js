@@ -133,6 +133,16 @@ const Settings = () => {
 								/>
 							</Form.Group>
 						</Stack>
+						<Form.Group controlId='formPassword'>
+							<Form.Label>Введите нынешний пароль для изменения</Form.Label>
+							<Form.Control
+								name='currentPassword'
+								type='password'
+								placeholder='Введите пароль'
+								value={values.currentPassword}
+								onChange={handleChanges}
+							/>
+						</Form.Group>
 						<Button
 							className='submit-button'
 							variant='secondary'

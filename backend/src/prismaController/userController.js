@@ -129,7 +129,17 @@ export const getUser = async (req, res) => {
 export const updateUser = async (req, res) => {
 	try {
 		const { id } = req.params
-		const { email, password, nickname, bio } = req.body
+		const { email, password, currentPassword, nickname, bio } = req.body
+
+		const user = await prisma.user.findUnique({ where: { id: parseInt(id) } })
+		if (!user) {
+			return res.status(404).json({ error: 'User not found' })
+		}
+
+		const isPasswordValid = await bcrypt.compare(currentPassword, user.password)
+		if (!isPasswordValid) {
+			return res.status(401).json({ error: 'Неправильный нынешний пароль' })
+		}
 
 		let fileName = null
 		if (req.files && req.files.image) {
