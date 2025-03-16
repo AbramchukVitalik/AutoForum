@@ -26,7 +26,7 @@ const Topics = () => {
 		}
 	}
 
-	const renderForums = (topics, index) => (
+	const renderTopics = (topics, index) => (
 		<tr key={index}>
 			<td>
 				<a href={`/topics?id=${topics.id}`}>
@@ -55,7 +55,7 @@ const Topics = () => {
 									<th>Просмотры</th>
 								</tr>
 							</thead>
-							<tbody>{topics.map(renderForums)}</tbody>
+							<tbody>{topics.map(renderTopics)}</tbody>
 						</Table>
 					</div>
 				</Card.Body>
