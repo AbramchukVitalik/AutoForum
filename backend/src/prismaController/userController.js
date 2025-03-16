@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import path from 'path'
+import fs from 'fs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -95,7 +96,7 @@ export const loginUser = async (req, res) => {
 export const getUsers = async (req, res) => {
 	try {
 		const users = await prisma.user.findMany({
-			include: { posts: true, profile: true },
+			include: { profile: true },
 		})
 
 		res.status(200).json(users)
@@ -131,7 +132,10 @@ export const updateUser = async (req, res) => {
 		const { id } = req.params
 		const { email, password, currentPassword, nickname, bio } = req.body
 
-		const user = await prisma.user.findUnique({ where: { id: parseInt(id) } })
+		const user = await prisma.user.findUnique({
+			where: { id: parseInt(id) },
+			include: { profile: true },
+		})
 		if (!user) {
 			return res.status(404).json({ error: 'User not found' })
 		}
@@ -143,6 +147,20 @@ export const updateUser = async (req, res) => {
 
 		let fileName = null
 		if (req.files && req.files.image) {
+			if (user.profile.image !== 'basePhoto.jpg') {
+				const oldFilePath = path.resolve(
+					__dirname + '../../../static/' + user.profile.image
+				)
+
+				fs.unlink(oldFilePath, err => {
+					if (err) {
+						console.error('Ошибка при удалении старого файла:', err.message)
+					} else {
+						console.log('Старый файл успешно удалён')
+					}
+				})
+			}
+
 			const image = req.files.image
 			fileName = uuidv4() + '.jpg'
 			image.mv(path.resolve(__dirname + '../../../static/' + fileName))

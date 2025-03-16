@@ -99,6 +99,13 @@ export const createTopic = async (req, res) => {
 			},
 		})
 
+		await prisma.forums.update({
+			where: { id: parseInt(id) },
+			data: {
+				numberOfTopics: { increment: 1 },
+			},
+		})
+
 		res.status(201).json(newTopic)
 	} catch (error) {
 		console.error(error)
@@ -150,6 +157,20 @@ export const deleteTopic = async (req, res) => {
 	try {
 		const { id } = req.params
 
+		const relatedTopic = await prisma.topics.findUnique({
+			where: { id: parseInt(id) },
+			include: { messages: true },
+		})
+
+		await prisma.forums.update({
+			where: { id: parseInt(relatedTopic.forumId) },
+			data: {
+				numberOfTopics: {
+					decrement: 1,
+				},
+			},
+		})
+
 		const deleteTopic = await prisma.$transaction(async prisma => {
 			await prisma.messages.deleteMany({
 				where: { topicsId: parseInt(id) },
@@ -181,6 +202,25 @@ export const createMessage = async (req, res) => {
 				published,
 				authorId,
 				topicsId: parseInt(id),
+			},
+		})
+
+		const topic = await prisma.topics.findUnique({
+			where: { id: parseInt(id) },
+			select: { forumId: true },
+		})
+
+		await prisma.topics.update({
+			where: { id: parseInt(id) },
+			data: {
+				numberOfMessages: { increment: 1 },
+			},
+		})
+
+		await prisma.forums.update({
+			where: { id: topic.forumId },
+			data: {
+				numberOfMessages: { increment: 1 },
 			},
 		})
 
@@ -233,8 +273,32 @@ export const deleteMessage = async (req, res) => {
 	try {
 		const { id } = req.params
 
+		const message = await prisma.messages.findUnique({
+			where: { id: parseInt(id) },
+			select: { topicsId: true },
+		})
+
 		const deleteMessage = await prisma.messages.delete({
 			where: { id: parseInt(id) },
+		})
+
+		const topic = await prisma.topics.findUnique({
+			where: { id: message.topicsId },
+			select: { forumId: true },
+		})
+
+		await prisma.topics.update({
+			where: { id: message.topicsId },
+			data: {
+				numberOfMessages: { decrement: 1 },
+			},
+		})
+
+		await prisma.forums.update({
+			where: { id: topic.forumId },
+			data: {
+				numberOfMessages: { decrement: 1 },
+			},
 		})
 
 		res.status(200).json(deleteMessage)
