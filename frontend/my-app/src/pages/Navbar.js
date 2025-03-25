@@ -61,7 +61,11 @@ const CustomNavbar = () => {
 					<Stack direction='horizontal' gap={3} className='form-group'>
 						<b>PRIME-LB</b>
 
-						{token && <Button variant='outline-light'>Создать тему</Button>}
+						{token && (
+							<Button variant='outline-light' href='/add_topic'>
+								Создать тему
+							</Button>
+						)}
 					</Stack>
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls='responsive-navbar-nav' />

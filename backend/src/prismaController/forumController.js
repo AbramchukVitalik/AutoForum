@@ -87,12 +87,14 @@ export const deleteForum = async (req, res) => {
 export const createTopic = async (req, res) => {
 	try {
 		const { id } = req.params
-		const { title, author } = req.body
+		const { title, author, authorId, question } = req.body
 
 		const newTopic = await prisma.topics.create({
 			data: {
 				title,
 				author,
+				authorId,
+				question,
 				numberOfMessages: 0,
 				numberOfViews: 0,
 				forumId: parseInt(id),
@@ -125,6 +127,23 @@ export const getTopics = async (req, res) => {
 		})
 
 		res.status(200).json(topics)
+	} catch (error) {
+		console.error(error)
+		res.status(500).json({ error: error.message })
+	}
+}
+export const getTopic = async (req, res) => {
+	const { id } = req.params
+
+	try {
+		const topic = await prisma.topics.findMany({
+			where: {
+				id: parseInt(id),
+			},
+			include: { messages: true },
+		})
+
+		res.status(200).json(topic)
 	} catch (error) {
 		console.error(error)
 		res.status(500).json({ error: error.message })

@@ -6,6 +6,7 @@ import {
 	deleteForum,
 	createTopic,
 	getTopics,
+	getTopic,
 	updateTopic,
 	deleteTopic,
 	createMessage,
@@ -23,6 +24,7 @@ router.delete('/deleteForum/:id', deleteForum)
 
 router.post('/createTopic/:id', createTopic)
 router.get('/getTopics/:id', getTopics)
+router.get('/getTopic/:id', getTopic)
 router.put('/updateTopic/:id', updateTopic)
 router.delete('/deleteTopic/:id', deleteTopic)
 

@@ -5,13 +5,13 @@ import { jwtDecode } from 'jwt-decode'
 import axios from 'axios'
 import { Button, Form, Card } from 'react-bootstrap'
 import Table from 'react-bootstrap/Table'
-import '../css/HomeCard.css'
 
 const Chat = () => {
 	const token = localStorage.getItem('token')
 	const urlParams = new URLSearchParams(window.location.search)
 	const idTopics = urlParams.get('id')
 	const [user, setUser] = useState({})
+	const [topic, setTopic] = useState({})
 	const [values, setValues] = useState({})
 	const [messages, setMessages] = useState([])
 
@@ -22,6 +22,7 @@ const Chat = () => {
 				const id = decodedToken.id
 
 				fetchUser(id)
+				fetchTopic(idTopics)
 
 				const socket = io('http://localhost:5000') // Адрес твоего сервера
 
@@ -37,7 +38,7 @@ const Chat = () => {
 				console.error('Invalid token:', error)
 			}
 		}
-	}, [token])
+	}, [token, idTopics])
 
 	const handleChanges = e => {
 		setValues({ ...values, [e.target.name]: e.target.value })
@@ -52,6 +53,16 @@ const Chat = () => {
 			setUser(response.data.user)
 		} catch (error) {
 			console.error('Error fetching user:', error)
+		}
+	}
+	const fetchTopic = async id => {
+		try {
+			const response = await axios.get(
+				`http://localhost:5000/api/getTopic/${id}`
+			)
+			setTopic(response.data)
+		} catch (error) {
+			console.error('Error fetching topic:', error)
 		}
 	}
 
@@ -91,6 +102,7 @@ const Chat = () => {
 									messages.map(renderMessages)
 								) : (
 									<tr>
+										<td>{topic[0]?.question}</td>
 										<td>Нет сообщений</td>
 									</tr>
 								)}

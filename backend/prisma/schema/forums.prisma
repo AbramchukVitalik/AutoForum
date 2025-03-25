@@ -14,9 +14,11 @@ model Topics {
 
   title             String
   author            String
+  authorId          Int
   numberOfMessages  Int
   numberOfViews     Int
 
+  question          String?
   messages          Messages[]
 
   forumId           Int
