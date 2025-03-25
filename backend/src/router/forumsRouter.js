@@ -26,9 +26,9 @@ router.get('/getTopics/:id', getTopics)
 router.put('/updateTopic/:id', updateTopic)
 router.delete('/deleteTopic/:id', deleteTopic)
 
-router.post('/createMessage/:id', createMessage)
-router.get('/getMessages/:id', getMessages)
-router.put('/updateMessage/:id', updateMessage)
-router.delete('/deleteMessage/:id', deleteMessage)
+// router.post('/createMessage/:id', createMessage)
+// router.get('/getMessages/:id', getMessages)
+// router.put('/updateMessage/:id', updateMessage)
+// router.delete('/deleteMessage/:id', deleteMessage)
 
 export default router

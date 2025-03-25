@@ -29,7 +29,7 @@ const Topics = () => {
 	const renderTopics = (topics, index) => (
 		<tr key={index}>
 			<td>
-				<a href={`/topics?id=${topics.id}`}>
+				<a href={`/chat?id=${topics.id}`}>
 					<h5>{topics.title}</h5>
 				</a>
 			</td>

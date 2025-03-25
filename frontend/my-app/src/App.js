@@ -6,6 +6,7 @@ import Register from './pages/Register.js'
 import Settings from './pages/Settings.js'
 import Profile from './pages/Profile.js'
 import Topics from './pages/Topics.js'
+import Chat from './pages/Chat.js'
 
 const token = localStorage.getItem('token')
 
@@ -21,6 +22,7 @@ function App() {
 					<Route path='/settings' element={token ? <Settings /> : <Login />} />
 					<Route path='/profile' element={token ? <Profile /> : <Login />} />
 					<Route path='/topics' element={<Topics />} />
+					<Route path='/chat' element={<Chat />} />
 				</Routes>
 			</div>
 		</Router>

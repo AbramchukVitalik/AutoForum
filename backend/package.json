@@ -2,6 +2,7 @@
 	"name": "backend",
 	"version": "1.0.0",
 	"main": "index.js",
+	"type": "module",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "nodemon ./src/index.js"
@@ -21,10 +22,12 @@
 		"jsonwebtoken": "^9.0.2",
 		"multer": "^1.4.5-lts.1",
 		"nodemon": "^3.1.9",
+		"react-firebase-hooks": "^5.1.1",
+		"rethinkdb": "^2.4.2",
+		"socket.io": "^4.8.1",
 		"uuid": "^11.1.0"
 	},
 	"devDependencies": {
 		"prisma": "^6.3.1"
-	},
-	"type": "module"
+	}
 }
