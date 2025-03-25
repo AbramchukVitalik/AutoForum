@@ -33,7 +33,12 @@ const Topics = () => {
 					<h5>{topics.title}</h5>
 				</a>
 			</td>
-			<td>{topics.author}</td>
+			<td>
+				<a href={`/profile?id=${topics.authorId}`}>
+					<h5>{topics.author}</h5>
+				</a>
+				{}
+			</td>
 			<td>{topics.numberOfMessages}</td>
 			<td>{topics.numberOfViews}</td>
 		</tr>
