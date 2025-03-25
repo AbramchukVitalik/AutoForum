@@ -14,9 +14,14 @@ const CustomNavbar = () => {
 
 	const token = localStorage.getItem('token')
 	const [user, setUser] = useState({ profile: { image: '' } })
+	const [findTopic, SetFindTopic] = useState({})
 
 	const handleNavigate = path => {
 		navigate(path)
+	}
+
+	const handleChanges = e => {
+		SetFindTopic({ ...findTopic, [e.target.name]: e.target.value })
 	}
 
 	const handleLogout = () => {
@@ -75,9 +80,20 @@ const CustomNavbar = () => {
 					<Stack direction='horizontal' gap={3} className='form-group'>
 						<div>
 							<Stack direction='horizontal' gap={2} className='form-group'>
-								<Button variant='outline-light'>Найти</Button>
+								<Button
+									variant='outline-light'
+									href={`/find_topic?find_topic=${findTopic.find}`}
+								>
+									Найти
+								</Button>
 								<Form.Group controlId='formText'>
-									<Form.Control type='text' placeholder='Найти тему' />
+									<Form.Control
+										name='find'
+										type='text'
+										placeholder='Введите название'
+										value={findTopic.find}
+										onChange={handleChanges}
+									/>
 								</Form.Group>
 							</Stack>
 						</div>

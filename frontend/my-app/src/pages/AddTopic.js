@@ -87,7 +87,7 @@ const AddTopic = () => {
 				<Card.Body className='inside_the_card'>
 					<Stack gap={3}>
 						<Stack>
-							<Form.Label>Форум</Form.Label>
+							<h5>Форум</h5>
 							<Form.Select
 								aria-label='Выберите форум'
 								onChange={handleForumChange}
@@ -98,7 +98,7 @@ const AddTopic = () => {
 						</Stack>
 
 						<Form.Group controlId='formTitle'>
-							<Form.Label>Название</Form.Label>
+							<h5>Название</h5>
 							<Form.Control
 								name='title'
 								type='text'
@@ -109,7 +109,7 @@ const AddTopic = () => {
 						</Form.Group>
 
 						<Form.Group controlId='formQuestion'>
-							<Form.Label>Вопрос</Form.Label>
+							<h5>Вопрос</h5>
 							<Form.Control
 								as='textarea'
 								name='question'

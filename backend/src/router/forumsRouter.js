@@ -13,6 +13,7 @@ import {
 	getMessages,
 	updateMessage,
 	deleteMessage,
+	findTopics,
 } from '../prismaController/forumController.js'
 
 const router = new Router()
@@ -27,6 +28,7 @@ router.get('/getTopics/:id', getTopics)
 router.get('/getTopic/:id', getTopic)
 router.put('/updateTopic/:id', updateTopic)
 router.delete('/deleteTopic/:id', deleteTopic)
+router.post('/findTopics', findTopics)
 
 // router.post('/createMessage/:id', createMessage)
 // router.get('/getMessages/:id', getMessages)

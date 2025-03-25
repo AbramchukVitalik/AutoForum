@@ -209,6 +209,29 @@ export const deleteTopic = async (req, res) => {
 	}
 }
 
+export const findTopics = async (req, res) => {
+	const { find } = req.body
+
+	console.log(req.body)
+	console.log(find)
+
+	try {
+		const topics = await prisma.topics.findMany({
+			where: {
+				title: {
+					contains: find,
+				},
+			},
+			include: { messages: true },
+		})
+
+		res.status(200).json(topics)
+	} catch (error) {
+		console.error(error)
+		res.status(500).json({ error: error.message })
+	}
+}
+
 export const createMessage = async (req, res) => {
 	try {
 		const { id } = req.params

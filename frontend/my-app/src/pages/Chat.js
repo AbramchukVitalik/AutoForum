@@ -97,12 +97,12 @@ const Chat = () => {
 						style={{ margin: '30px', maxHeight: '650px', overflowY: 'auto' }}
 					>
 						<Table striped bordered hover>
+							<thead>{topic[0]?.question}</thead>
 							<tbody>
 								{messages && messages.length > 0 ? (
 									messages.map(renderMessages)
 								) : (
 									<tr>
-										<td>{topic[0]?.question}</td>
 										<td>Нет сообщений</td>
 									</tr>
 								)}
