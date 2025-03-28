@@ -2,6 +2,7 @@ import { Router } from 'express'
 import {
 	createForum,
 	getForums,
+	getForum,
 	updateForum,
 	deleteForum,
 	createTopic,
@@ -20,6 +21,7 @@ const router = new Router()
 
 router.post('/createForum', createForum)
 router.get('/getForums', getForums)
+router.get('/getForum/:id', getForum)
 router.put('/updateForum/:id', updateForum)
 router.delete('/deleteForum/:id', deleteForum)
 

@@ -34,6 +34,20 @@ export const getForums = async (req, res) => {
 		res.status(500).json({ error: error.message })
 	}
 }
+export const getForum = async (req, res) => {
+	try {
+		const { id } = req.params
+
+		const forum = await prisma.forums.findUnique({
+			where: { id: parseInt(id) },
+		})
+
+		res.status(200).json(forum)
+	} catch (error) {
+		console.error(error)
+		res.status(500).json({ error: error.message })
+	}
+}
 
 export const updateForum = async (req, res) => {
 	try {
@@ -136,7 +150,7 @@ export const getTopic = async (req, res) => {
 	const { id } = req.params
 
 	try {
-		const topic = await prisma.topics.findMany({
+		const topic = await prisma.topics.findUnique({
 			where: {
 				id: parseInt(id),
 			},
