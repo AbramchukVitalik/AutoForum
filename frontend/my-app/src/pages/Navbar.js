@@ -82,7 +82,11 @@ const CustomNavbar = () => {
 							<Stack direction='horizontal' gap={2} className='form-group'>
 								<Button
 									variant='outline-light'
-									href={`/find_topic?find_topic=${findTopic.find}`}
+									href={
+										findTopic.find !== undefined
+											? `/find_topic?find_topic=${findTopic.find}`
+											: '#'
+									}
 								>
 									Найти
 								</Button>

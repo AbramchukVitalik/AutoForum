@@ -195,14 +195,9 @@ export const deleteUser = async (req, res) => {
 		const { id } = req.params
 
 		const deleteUser = await prisma.$transaction(async prisma => {
-			await prisma.profile.deleteMany({
+			await prisma.profile.delete({
 				where: { userId: parseInt(id) },
 			})
-
-			await prisma.post.deleteMany({
-				where: { authorId: parseInt(id) },
-			})
-
 			const dUser = await prisma.user.delete({
 				where: { id: parseInt(id) },
 			})

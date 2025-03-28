@@ -22,10 +22,6 @@ const AddTopic = () => {
 	}
 
 	const handleSubmit = async => {
-		console.log(values)
-		console.log(user.id)
-		console.log(user.nickname)
-
 		axios
 			.post(`http://localhost:5000/api/createTopic/${forumId}`, {
 				...values,

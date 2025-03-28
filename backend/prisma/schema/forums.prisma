@@ -23,6 +23,8 @@ model Topics {
 
   forumId           Int
   forum             Forums   @relation(fields: [forumId], references: [id])
+
+  createAt          DateTime @default(now()) 
 }
 
 model Messages {
@@ -36,5 +38,5 @@ model Messages {
   topicsId    Int
   topics      Topics   @relation(fields: [topicsId], references: [id])
 
-  createAt  DateTime @default(now()) 
+  createAt    DateTime @default(now()) 
 }

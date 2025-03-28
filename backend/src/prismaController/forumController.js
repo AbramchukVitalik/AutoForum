@@ -212,9 +212,6 @@ export const deleteTopic = async (req, res) => {
 export const findTopics = async (req, res) => {
 	const { find } = req.body
 
-	console.log(req.body)
-	console.log(find)
-
 	try {
 		const topics = await prisma.topics.findMany({
 			where: {
