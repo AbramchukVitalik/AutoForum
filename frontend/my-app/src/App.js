@@ -9,8 +9,13 @@ import Topics from './pages/Topics.js'
 import Chat from './pages/Chat.js'
 import AddTopic from './pages/AddTopic.js'
 import FindTopic from './pages/FindTopic.js'
+import AddForum from './pages/AddForum.js'
+import DeleteForum from './pages/DeleteForumOrTopic.js'
+
+import { jwtDecode } from 'jwt-decode'
 
 const token = localStorage.getItem('token')
+const decodedToken = jwtDecode(token)
 
 function App() {
 	return (
@@ -24,6 +29,26 @@ function App() {
 					<Route path='/settings' element={token ? <Settings /> : <Login />} />
 					<Route path='/profile' element={token ? <Profile /> : <Login />} />
 					<Route path='/add_topic' element={token ? <AddTopic /> : <Login />} />
+					<Route
+						path='/add_forum'
+						element={
+							token && decodedToken.role === 'SUPER_ADMIN' ? (
+								<AddForum />
+							) : (
+								<Home />
+							)
+						}
+					/>
+					<Route
+						path='/delete_forum'
+						element={
+							token && decodedToken.role === 'SUPER_ADMIN' ? (
+								<DeleteForum />
+							) : (
+								<Home />
+							)
+						}
+					/>
 					<Route path='/topics' element={<Topics />} />
 					<Route path='/chat' element={<Chat />} />
 					<Route path='/find_topic' element={<FindTopic />} />

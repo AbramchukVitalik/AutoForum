@@ -1,15 +1,28 @@
 import React, { useState, useEffect } from 'react'
-import { Card } from 'react-bootstrap'
+import { Card, Button, Stack } from 'react-bootstrap'
 import Table from 'react-bootstrap/Table'
+import { useNavigate } from 'react-router-dom'
+import { jwtDecode } from 'jwt-decode'
 import axios from 'axios'
 import '../css/HomeCard.css'
 
 const Home = () => {
+	const navigate = useNavigate()
+	const token = localStorage.getItem('token')
+
 	const [forums, setForums] = useState([])
+	const [role, setRole] = useState({})
+
+	const handleNavigate = path => {
+		navigate(path)
+	}
 
 	useEffect(() => {
+		const decodedToken = jwtDecode(token)
+		setRole(decodedToken.role)
+
 		fetchForums()
-	}, [])
+	}, [token])
 
 	const fetchForums = async () => {
 		try {
@@ -31,6 +44,18 @@ const Home = () => {
 			</td>
 			<td>{forums.numberOfTopics}</td>
 			<td>{forums.numberOfMessages}</td>
+			{role === 'SUPER_ADMIN' && (
+				<td>
+					<Button
+						variant='outline-danger'
+						onClick={() =>
+							handleNavigate(`/delete_forum?deleted=forum&id=${forums.id}`)
+						}
+					>
+						Удалить
+					</Button>
+				</td>
+			)}
 		</tr>
 	)
 
@@ -38,19 +63,42 @@ const Home = () => {
 		<div className='outer-card'>
 			<Card className='home-card'>
 				<Card.Body>
-					<div
-						style={{ margin: '30px', maxHeight: '650px', overflowY: 'auto' }}
-					>
-						<Table striped bordered hover>
-							<thead>
-								<tr>
-									<th>Форум</th>
-									<th>Темы</th>
-									<th>Сообщения</th>
-								</tr>
-							</thead>
-							<tbody>{forums.map(renderForums)}</tbody>
-						</Table>
+					<div style={{ margin: '30px' }}>
+						<Stack gap={3}>
+							{role === 'SUPER_ADMIN' && (
+								<div
+									style={{
+										display: 'flex',
+										justifyContent: 'flex-end',
+										marginBottom: '12px',
+									}}
+								>
+									<Button
+										variant='outline-success'
+										onClick={() => handleNavigate('/add_forum')}
+										style={{
+											borderRadius: '8px',
+										}}
+									>
+										Добавить форум
+									</Button>
+								</div>
+							)}
+
+							<div style={{ maxHeight: '600px', overflowY: 'auto' }}>
+								<Table striped bordered hover>
+									<thead>
+										<tr>
+											<th>Форум</th>
+											<th>Темы</th>
+											<th>Сообщения</th>
+											{role === 'SUPER_ADMIN' && <th>Удалить</th>}
+										</tr>
+									</thead>
+									<tbody>{forums.map(renderForums)}</tbody>
+								</Table>
+							</div>
+						</Stack>
 					</div>
 				</Card.Body>
 			</Card>
