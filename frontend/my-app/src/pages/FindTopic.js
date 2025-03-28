@@ -13,6 +13,11 @@ const FindTopic = () => {
 	const [forums, setForums] = useState([])
 	const [sortOption, setSortOption] = useState('ascendingDate')
 	const [selectedForum, setSelectedForum] = useState('all')
+	const [author, setAuthor] = useState({})
+
+	const handleChanges = e => {
+		setAuthor({ ...author, [e.target.name]: e.target.value })
+	}
 
 	useEffect(() => {
 		fetchFindTopics()
@@ -45,13 +50,20 @@ const FindTopic = () => {
 	}
 
 	const filteredTopics = useMemo(() => {
-		const topicsToFilter =
+		let topicsToFilter =
 			selectedForum === 'all'
 				? topics
 				: topics.filter(topic => topic.forumId === Number(selectedForum))
 
+		if (author.author && author.author.trim() !== '') {
+			const authorQuery = author.author.trim().toLowerCase()
+			topicsToFilter = topicsToFilter.filter(topic =>
+				topic.author.toLowerCase().includes(authorQuery)
+			)
+		}
+
 		return sortTopics(sortOption, topicsToFilter)
-	}, [topics, selectedForum, sortOption])
+	}, [topics, selectedForum, sortOption, author])
 
 	const renderTopics = (topic, index) => (
 		<tr key={index}>
@@ -190,6 +202,23 @@ const FindTopic = () => {
 													onChange={() => setSortOption('descendingViews')}
 												/>
 											</Stack>
+										</Form>
+									</Card>
+
+									<Card className='p-3 shadow-sm flex-grow-1'>
+										<Form>
+											<Form.Label className='fw-bold'>
+												Поиск по автору
+											</Form.Label>
+											<Form.Group controlId='formAuthor'>
+												<Form.Control
+													name='author'
+													type='text'
+													placeholder='Введите автора'
+													value={author.author}
+													onChange={handleChanges}
+												/>
+											</Form.Group>
 										</Form>
 									</Card>
 

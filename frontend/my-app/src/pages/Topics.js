@@ -15,11 +15,14 @@ const Topics = () => {
 	const navigate = useNavigate()
 
 	const [topics, setTopics] = useState([])
-	const [selectedForum, setSelectedForum] = useState('all')
 	const [sortOption, setSortOption] = useState('ascendingDate')
 
 	const [role, setRole] = useState({})
+	const [author, setAuthor] = useState({})
 
+	const handleChanges = e => {
+		setAuthor({ ...author, [e.target.name]: e.target.value })
+	}
 	const handleNavigate = path => {
 		navigate(path)
 	}
@@ -44,19 +47,20 @@ const Topics = () => {
 	}
 
 	const filteredTopics = useMemo(() => {
-		const topicsToFilter =
-			selectedForum === 'all'
-				? topics
-				: topics.filter(topic => topic.forumId === Number(selectedForum))
+		let topicsToFilter = topics
+
+		if (author.author && author.author.trim() !== '') {
+			const authorQuery = author.author.trim().toLowerCase()
+			topicsToFilter = topicsToFilter.filter(topic =>
+				topic.author.toLowerCase().includes(authorQuery)
+			)
+		}
+
 		return sortTopics(sortOption, topicsToFilter)
-	}, [topics, selectedForum, sortOption])
+	}, [topics, sortOption, author])
 
 	const handleSortChange = option => {
 		setSortOption(option)
-	}
-
-	const handleForumChange = e => {
-		setSelectedForum(e.target.value)
 	}
 
 	const renderTopics = (topic, index) => (
@@ -206,10 +210,27 @@ const Topics = () => {
 											</Stack>
 										</Form>
 									</Card>
+
+									<Card className='p-3 shadow-sm flex-grow-1'>
+										<Form>
+											<Form.Label className='fw-bold'>
+												Поиск по автору
+											</Form.Label>
+											<Form.Group controlId='formAuthor'>
+												<Form.Control
+													name='author'
+													type='text'
+													placeholder='Введите автора'
+													value={author.author}
+													onChange={handleChanges}
+												/>
+											</Form.Group>
+										</Form>
+									</Card>
 								</Stack>
 							</Stack>
 
-							<div style={{ maxHeight: '500px', overflowY: 'auto' }}>
+							<div style={{ maxHeight: '420px', overflowY: 'auto' }}>
 								<Table striped bordered hover>
 									<thead>
 										<tr>
