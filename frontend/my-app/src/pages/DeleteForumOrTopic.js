@@ -15,12 +15,8 @@ const DeleteForum = () => {
 	const [topic, setTopic] = useState([])
 
 	useEffect(() => {
-		{
-			deleted === 'forum' && fetchForum()
-		}
-		{
-			deleted === 'topic' && fetchTopic()
-		}
+		deleted === 'forum' && fetchForum()
+		deleted === 'topic' && fetchTopic()
 	}, [])
 
 	const fetchForum = async () => {
@@ -49,7 +45,7 @@ const DeleteForum = () => {
 	const deleteForum = async () => {
 		try {
 			await axios.delete(`http://localhost:5000/api/deleteForum/${id}`)
-			navigate(`/`)
+			navigate(-1)
 		} catch (error) {
 			console.error(error)
 		}
@@ -57,7 +53,7 @@ const DeleteForum = () => {
 	const deleteTopic = async () => {
 		try {
 			await axios.delete(`http://localhost:5000/api/deleteTopic/${id}`)
-			navigate(`/topics?id=${topic.forumId}`)
+			navigate(-1)
 		} catch (error) {
 			console.error(error)
 		}
@@ -78,7 +74,7 @@ const DeleteForum = () => {
 									<Button
 										variant='outline-secondary'
 										type='button'
-										onClick={() => navigate(`/`)}
+										onClick={() => navigate(-1)}
 										style={{ flex: 1 }}
 									>
 										Отмена
@@ -104,7 +100,7 @@ const DeleteForum = () => {
 									<Button
 										variant='outline-secondary'
 										type='button'
-										onClick={() => navigate(`/`)}
+										onClick={() => navigate(-1)}
 										style={{ flex: 1 }}
 									>
 										Отмена

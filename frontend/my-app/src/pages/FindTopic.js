@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { Card, Form, Stack } from 'react-bootstrap'
+import { Card, Form, Stack, Button } from 'react-bootstrap'
+import { jwtDecode } from 'jwt-decode'
 import Table from 'react-bootstrap/Table'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import '../css/HomeCard.css'
 import { sortTopics } from '../sortUtils'
@@ -9,17 +11,28 @@ const FindTopic = () => {
 	const urlParams = new URLSearchParams(window.location.search)
 	const find = urlParams.get('find_topic')
 
+	const token = localStorage.getItem('token')
+	const navigate = useNavigate()
+
 	const [topics, setTopics] = useState([])
 	const [forums, setForums] = useState([])
 	const [sortOption, setSortOption] = useState('ascendingDate')
 	const [selectedForum, setSelectedForum] = useState('all')
 	const [author, setAuthor] = useState({})
 
+	const [role, setRole] = useState({})
+
 	const handleChanges = e => {
 		setAuthor({ ...author, [e.target.name]: e.target.value })
 	}
+	const handleNavigate = path => {
+		navigate(path)
+	}
 
 	useEffect(() => {
+		const decodedToken = jwtDecode(token)
+		setRole(decodedToken.role)
+
 		fetchFindTopics()
 		fetchForums()
 	}, [])
@@ -79,6 +92,18 @@ const FindTopic = () => {
 			</td>
 			<td>{topic.numberOfMessages}</td>
 			<td>{topic.numberOfViews}</td>
+			{role === 'SUPER_ADMIN' && (
+				<td>
+					<Button
+						variant='outline-danger'
+						onClick={() =>
+							handleNavigate(`/delete_forum?deleted=topic&id=${topic.id}`)
+						}
+					>
+						Удалить
+					</Button>
+				</td>
+			)}
 		</tr>
 	)
 
@@ -248,6 +273,7 @@ const FindTopic = () => {
 											<th>Автор</th>
 											<th>Сообщения</th>
 											<th>Просмотры</th>
+											{role === 'SUPER_ADMIN' && <th>Удалить</th>}
 										</tr>
 									</thead>
 									<tbody>
