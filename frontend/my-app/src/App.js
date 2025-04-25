@@ -15,7 +15,7 @@ import DeleteForum from './pages/DeleteForumOrTopic.js'
 import { jwtDecode } from 'jwt-decode'
 
 const token = localStorage.getItem('token')
-const decodedToken = jwtDecode(token)
+const decodedToken = token ? jwtDecode(token) : null
 
 function App() {
 	return (

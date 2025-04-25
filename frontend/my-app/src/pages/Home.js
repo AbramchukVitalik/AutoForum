@@ -18,8 +18,12 @@ const Home = () => {
 	}
 
 	useEffect(() => {
-		const decodedToken = jwtDecode(token)
-		setRole(decodedToken.role)
+		if (token) {
+			const decodedToken = jwtDecode(token)
+			setRole(decodedToken.role)
+		} else {
+			setRole('GUEST')
+		}
 
 		fetchForums()
 	}, [token])
@@ -37,7 +41,7 @@ const Home = () => {
 	const renderForums = (forums, index) => (
 		<tr key={index}>
 			<td>
-				<a href={`/topics?id=${forums.id}`}>
+				<a href={`/topics?id=${forums.id}`} className='text-decoration-none'>
 					<h5>{forums.title}</h5>
 				</a>
 				<p>{forums.description}</p>

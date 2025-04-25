@@ -1,14 +1,16 @@
-import { Router } from 'express'
+import express from 'express'
 import {
 	getMessagesByTopic,
 	addMessage,
-	subscribeToTopicChanges,
+	streamMessages,
+	updateLikes,
 } from '../prismaController/messagesController.js'
 
-const router = new Router()
+const router = express.Router()
 
-router.post('/createMessage/:id', addMessage)
-router.get('/getMessages/:id', getMessagesByTopic)
-router.put('/updateMessage/:id', subscribeToTopicChanges)
+router.get('/messages/:topicId', getMessagesByTopic)
+router.post('/messages/:idTopics', addMessage)
+router.put('/messages/:messageId', updateLikes)
+router.get('/stream/messages', streamMessages)
 
 export default router

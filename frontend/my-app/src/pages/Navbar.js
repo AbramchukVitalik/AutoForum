@@ -109,7 +109,8 @@ const CustomNavbar = () => {
 										<Dropdown.Toggle
 											as='a'
 											id='dropdown-custom-components'
-											className='custom-dropdown-toggle'
+											className='custom-dropdown-toggle text-decoration-none'
+											style={{ textDecoration: 'none' }}
 										>
 											<Stack direction='horizontal' gap={2}>
 												<h5 style={{ marginTop: '4px', color: '#ffffff' }}>

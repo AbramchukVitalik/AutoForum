@@ -30,8 +30,12 @@ const FindTopic = () => {
 	}
 
 	useEffect(() => {
-		const decodedToken = jwtDecode(token)
-		setRole(decodedToken.role)
+		if (token) {
+			const decodedToken = jwtDecode(token)
+			setRole(decodedToken.role)
+		} else {
+			setRole('GUEST')
+		}
 
 		fetchFindTopics()
 		fetchForums()

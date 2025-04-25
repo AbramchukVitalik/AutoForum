@@ -112,7 +112,11 @@ export const getUser = async (req, res) => {
 		const user = await prisma.user.findUnique({
 			where: { id: parseInt(id) },
 			include: {
-				profile: true, // Загрузка связанных данных профиля
+				profile: {
+					include: {
+						likedMessages: true,
+					},
+				},
 			},
 		})
 
@@ -130,7 +134,16 @@ export const getUser = async (req, res) => {
 export const updateUser = async (req, res) => {
 	try {
 		const { id } = req.params
-		const { email, password, currentPassword, nickname, bio } = req.body
+		const {
+			email,
+			password,
+			currentPassword,
+			nickname,
+			bio,
+			like,
+			postsNum,
+			messageId,
+		} = req.body
 
 		const user = await prisma.user.findUnique({
 			where: { id: parseInt(id) },
@@ -140,9 +153,17 @@ export const updateUser = async (req, res) => {
 			return res.status(404).json({ error: 'User not found' })
 		}
 
-		const isPasswordValid = await bcrypt.compare(currentPassword, user.password)
-		if (!isPasswordValid) {
-			return res.status(401).json({ error: 'Неправильный нынешний пароль' })
+		if (email || password || nickname || bio) {
+			if (!currentPassword) {
+				return res.status(400).json({ error: 'Current password is required' })
+			}
+			const isPasswordValid = await bcrypt.compare(
+				currentPassword,
+				user.password
+			)
+			if (!isPasswordValid) {
+				return res.status(401).json({ error: 'Неправильный нынешний пароль' })
+			}
 		}
 
 		let fileName = null
@@ -175,8 +196,36 @@ export const updateUser = async (req, res) => {
 		if (email) updateData.email = email
 		if (hashedPassword) updateData.password = hashedPassword
 		if (nickname) updateData.nickname = nickname
-		if (bio) updateData.profile = { update: { bio: bio } }
-		if (fileName) updateData.profile = { update: { image: fileName } }
+
+		const profileUpdate = {}
+		if (bio) profileUpdate.bio = bio
+		if (fileName) profileUpdate.image = fileName
+		if (like) {
+			profileUpdate.like = { increment: 1 }
+
+			await prisma.likedMessage.create({
+				data: {
+					idMessage: messageId,
+					profile: {
+						connect: { id: user.profile.id },
+					},
+				},
+			})
+		} else if (like === 0) {
+			profileUpdate.like = { decrement: 1 }
+
+			await prisma.likedMessage.deleteMany({
+				where: {
+					idMessage: messageId,
+					profileId: user.profile.id,
+				},
+			})
+		}
+		if (postsNum === 1) profileUpdate.postsNum = { increment: 1 }
+
+		if (Object.keys(profileUpdate).length > 0) {
+			updateData.profile = { update: profileUpdate }
+		}
 
 		const updatedUser = await prisma.user.update({
 			where: { id: parseInt(id) },

@@ -10,10 +10,6 @@ import {
 	getTopic,
 	updateTopic,
 	deleteTopic,
-	createMessage,
-	getMessages,
-	updateMessage,
-	deleteMessage,
 	findTopics,
 } from '../prismaController/forumController.js'
 
@@ -31,10 +27,5 @@ router.get('/getTopic/:id', getTopic)
 router.put('/updateTopic/:id', updateTopic)
 router.delete('/deleteTopic/:id', deleteTopic)
 router.post('/findTopics', findTopics)
-
-// router.post('/createMessage/:id', createMessage)
-// router.get('/getMessages/:id', getMessages)
-// router.put('/updateMessage/:id', updateMessage)
-// router.delete('/deleteMessage/:id', deleteMessage)
 
 export default router
