@@ -28,8 +28,12 @@ const Topics = () => {
 	}
 
 	useEffect(() => {
-		const decodedToken = jwtDecode(token)
-		setRole(decodedToken.role)
+		if (token) {
+			const decodedToken = jwtDecode(token)
+			setRole(decodedToken.role)
+		} else {
+			setRole('GUEST')
+		}
 
 		fetchTopics()
 	}, [])
@@ -66,12 +70,15 @@ const Topics = () => {
 	const renderTopics = (topic, index) => (
 		<tr key={index}>
 			<td>
-				<a href={`/chat?id=${topic.id}`}>
+				<a href={`/chat?id=${topic.id}`} className='text-decoration-none'>
 					<h5>{topic.title}</h5>
 				</a>
 			</td>
 			<td>
-				<a href={`/profile?id=${topic.authorId}`}>
+				<a
+					href={`/profile?id=${topic.authorId}`}
+					className='text-decoration-none'
+				>
 					<h5>{topic.author}</h5>
 				</a>
 			</td>

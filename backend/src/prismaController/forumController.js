@@ -169,18 +169,52 @@ export const updateTopic = async (req, res) => {
 		const { id } = req.params
 		const { title, author, numberOfMessages, numberOfViews } = req.body
 
-		const updateTopic = await prisma.topics.update({
-			where: { id: parseInt(id) },
-			data: {
-				title,
-				author,
-				numberOfMessages,
-				numberOfViews,
-			},
+		const updateData = {
+			title,
+			author,
+		}
+
+		if (numberOfViews === 1) {
+			await prisma.topics.update({
+				where: { id: parseInt(id, 10) },
+				data: {
+					numberOfViews: { increment: 1 },
+				},
+			})
+
+			return res.status(200).json({ message: 'Views incremented' })
+		}
+
+		if (numberOfMessages === 1) {
+			const topic = await prisma.topics.findUnique({
+				where: { id: parseInt(id) },
+			})
+
+			if (!topic) {
+				return res.status(404).json({ error: 'Topic not found' })
+			}
+
+			await prisma.topics.update({
+				where: { id: parseInt(id, 10) },
+				data: {
+					numberOfMessages: { increment: 1 },
+				},
+			})
+			await prisma.forums.update({
+				where: { id: parseInt(topic.forumId, 10) },
+				data: {
+					numberOfMessages: { increment: 1 },
+				},
+			})
+		}
+
+		const updatedTopic = await prisma.topics.update({
+			where: { id: parseInt(id, 10) },
+			data: updateData,
 		})
 
-		res.status(200).json(updateTopic)
-	} catch {
+		res.status(200).json(updatedTopic)
+	} catch (error) {
 		console.error(error)
 		res.status(500).json({ error: error.message })
 	}

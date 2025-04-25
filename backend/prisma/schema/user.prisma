@@ -17,10 +17,21 @@ model Profile {
   postsNum  Int
   like      Int
 
+  likedMessages   LikedMessage[]
+
   userId    Int    @unique
   user      User   @relation(fields: [userId], references: [id])
   
   createdAt DateTime @default(now())  
+}
+
+model LikedMessage {
+  id        Int    @id @default(autoincrement())
+
+  idMessage String
+
+  profileId    Int
+  profile      Profile   @relation(fields: [profileId], references: [id])
 }
 
 enum Role {
