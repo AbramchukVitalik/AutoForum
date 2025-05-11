@@ -3,3 +3,131 @@
 	width: 80%;
 	min-height: 75%;
 }
+.find-card {
+	margin-top: 65px;
+	width: 80%;
+	min-height: 75%;
+}
+
+@media (max-width: 1200px) {
+	.home-card {
+		width: 85%;
+	}
+	.find-card {
+		width: 85%;
+	}
+}
+@media (max-width: 992px) {
+	.home-card {
+		width: 90%;
+	}
+	.find-card {
+		width: 90%;
+	}
+}
+@media (max-width: 768px) {
+	.home-card {
+		width: 95%;
+	}
+	.find-card {
+		width: 95%;
+	}
+}
+
+@media (max-height: 850px) {
+	.find-card {
+		margin-top: 30%;
+	}
+}
+@media (max-height: 750px) {
+	.home-card {
+		margin-top: 20%;
+	}
+}
+@media (max-height: 600px) {
+	.home-card {
+		margin-top: 40%;
+	}
+	.find-card {
+		margin-top: 40%;
+	}
+}
+@media (max-height: 450px) {
+	.home-card {
+		margin-top: 50%;
+	}
+	.find-card {
+		margin-top: 60%;
+	}
+}
+@media (max-height: 300px) {
+	.home-card {
+		margin-top: 65%;
+	}
+	.find-card {
+		margin-top: 75%;
+	}
+}
+
+@media (max-height: 900px) and (max-width: 834px),
+	(max-height: 1200px) and (max-width: 600px) {
+	.find-card {
+		margin-top: 80%;
+	}
+}
+@media (max-height: 750px) and (max-width: 834px),
+	(max-height: 900px) and (max-width: 600px) {
+	.find-card {
+		margin-top: 95%;
+	}
+}
+@media (max-height: 600px) and (max-width: 834px),
+	(max-height: 750px) and (max-width: 600px) {
+	.find-card {
+		margin-top: 110%;
+	}
+}
+@media (max-height: 550px) and (max-width: 834px),
+	(max-height: 700px) and (max-width: 600px) {
+	.find-card {
+		margin-top: 130%;
+	}
+}
+@media (max-height: 400px) and (max-width: 834px),
+	(max-height: 700px) and (max-width: 600px) {
+	.find-card {
+		margin-top: 130%;
+	}
+}
+
+@media (max-height: 600px) and (max-width: 600px) {
+	.find-card {
+		margin-top: 150%;
+	}
+}
+@media (max-height: 400px) and (max-width: 600px) {
+	.find-card {
+		margin-top: 180%;
+	}
+}
+
+@media (max-height: 900px) and (max-width: 400px) {
+	.find-card {
+		margin-top: 130%;
+	}
+}
+@media (max-height: 700px) and (max-width: 400px) {
+	.find-card {
+		margin-top: 150%;
+	}
+}
+@media (max-height: 600px) and (max-width: 400px) {
+	.find-card {
+		margin-top: 190%;
+	}
+}
+@media (max-height: 450px) and (max-width: 400px) {
+	.find-card {
+		margin-top: 250%;
+	}
+}

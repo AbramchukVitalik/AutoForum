@@ -272,8 +272,12 @@ const Chat = () => {
 									>
 										<h5>{msgUser.nickname}</h5>
 									</a>
-									<h6>Количество лайков: {msgUser.profile?.like || 0}</h6>
-									<h6>Сообщения: {msgUser.profile?.postsNum || 0}</h6>
+									<h6 style={{ whiteSpace: 'nowrap' }}>
+										Количество лайков: {msgUser.profile?.like || 0}
+									</h6>
+									<h6 style={{ whiteSpace: 'nowrap' }}>
+										Сообщения: {msgUser.profile?.postsNum || 0}
+									</h6>
 								</>
 							) : (
 								<span>Загрузка...</span>

@@ -101,7 +101,7 @@ const Topics = () => {
 
 	return (
 		<div className='outer-card'>
-			<Card className='home-card'>
+			<Card className='find-card'>
 				<Card.Body>
 					<div style={{ margin: '30px' }}>
 						<Stack gap={3}>

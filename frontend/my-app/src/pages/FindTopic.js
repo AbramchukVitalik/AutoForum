@@ -85,7 +85,7 @@ const FindTopic = () => {
 	const renderTopics = (topic, index) => (
 		<tr key={index}>
 			<td>
-				<a href={`/chat?id=${topic.id}`}>
+				<a href={`/chat?id=${topic.id}`} style={{ whiteSpace: 'nowrap' }}>
 					<h5>{topic.title}</h5>
 				</a>
 			</td>
@@ -119,7 +119,7 @@ const FindTopic = () => {
 
 	return (
 		<div className='outer-card'>
-			<Card className='home-card'>
+			<Card className='find-card'>
 				<Card.Body>
 					<div style={{ margin: '30px' }}>
 						<Stack gap={3}>
@@ -132,7 +132,10 @@ const FindTopic = () => {
 								>
 									<Card className='p-3 shadow-sm flex-grow-1'>
 										<Form>
-											<Form.Label className='fw-bold'>
+											<Form.Label
+												className='fw-bold'
+												style={{ whiteSpace: 'nowrap' }}
+											>
 												Сортировка по алфавиту
 											</Form.Label>
 											<Stack direction='horizontal' gap={3}>
@@ -143,6 +146,7 @@ const FindTopic = () => {
 													id='ascendingTitle'
 													checked={sortOption === 'ascendingTitle'}
 													onChange={() => setSortOption('ascendingTitle')}
+													style={{ whiteSpace: 'nowrap' }}
 												/>
 												<Form.Check
 													type='radio'
@@ -151,6 +155,7 @@ const FindTopic = () => {
 													id='descendingTitle'
 													checked={sortOption === 'descendingTitle'}
 													onChange={() => setSortOption('descendingTitle')}
+													style={{ whiteSpace: 'nowrap' }}
 												/>
 											</Stack>
 										</Form>
@@ -158,7 +163,10 @@ const FindTopic = () => {
 
 									<Card className='p-3 shadow-sm flex-grow-1'>
 										<Form>
-											<Form.Label className='fw-bold'>
+											<Form.Label
+												className='fw-bold'
+												style={{ whiteSpace: 'nowrap' }}
+											>
 												Сортировка по времени
 											</Form.Label>
 											<Stack direction='horizontal' gap={3}>
@@ -169,6 +177,7 @@ const FindTopic = () => {
 													id='ascendingDate'
 													checked={sortOption === 'ascendingDate'}
 													onChange={() => setSortOption('ascendingDate')}
+													style={{ whiteSpace: 'nowrap' }}
 												/>
 												<Form.Check
 													type='radio'
@@ -177,6 +186,7 @@ const FindTopic = () => {
 													id='descendingDate'
 													checked={sortOption === 'descendingDate'}
 													onChange={() => setSortOption('descendingDate')}
+													style={{ whiteSpace: 'nowrap' }}
 												/>
 											</Stack>
 										</Form>
@@ -184,7 +194,10 @@ const FindTopic = () => {
 
 									<Card className='p-3 shadow-sm flex-grow-1'>
 										<Form>
-											<Form.Label className='fw-bold'>
+											<Form.Label
+												className='fw-bold'
+												style={{ whiteSpace: 'nowrap' }}
+											>
 												Сортировка по сообщениям
 											</Form.Label>
 											<Stack direction='horizontal' gap={3}>
@@ -195,6 +208,7 @@ const FindTopic = () => {
 													id='ascendingMessages'
 													checked={sortOption === 'ascendingMessages'}
 													onChange={() => setSortOption('ascendingMessages')}
+													style={{ whiteSpace: 'nowrap' }}
 												/>
 												<Form.Check
 													type='radio'
@@ -203,6 +217,7 @@ const FindTopic = () => {
 													id='descendingMessages'
 													checked={sortOption === 'descendingMessages'}
 													onChange={() => setSortOption('descendingMessages')}
+													style={{ whiteSpace: 'nowrap' }}
 												/>
 											</Stack>
 										</Form>
@@ -210,7 +225,10 @@ const FindTopic = () => {
 
 									<Card className='p-3 shadow-sm flex-grow-1'>
 										<Form>
-											<Form.Label className='fw-bold'>
+											<Form.Label
+												className='fw-bold'
+												style={{ whiteSpace: 'nowrap' }}
+											>
 												Сортировка по просмотрам
 											</Form.Label>
 											<Stack direction='horizontal' gap={3}>
@@ -221,6 +239,7 @@ const FindTopic = () => {
 													id='ascendingViews'
 													checked={sortOption === 'ascendingViews'}
 													onChange={() => setSortOption('ascendingViews')}
+													style={{ whiteSpace: 'nowrap' }}
 												/>
 												<Form.Check
 													type='radio'
@@ -229,6 +248,7 @@ const FindTopic = () => {
 													id='descendingViews'
 													checked={sortOption === 'descendingViews'}
 													onChange={() => setSortOption('descendingViews')}
+													style={{ whiteSpace: 'nowrap' }}
 												/>
 											</Stack>
 										</Form>
@@ -236,7 +256,10 @@ const FindTopic = () => {
 
 									<Card className='p-3 shadow-sm flex-grow-1'>
 										<Form>
-											<Form.Label className='fw-bold'>
+											<Form.Label
+												className='fw-bold'
+												style={{ whiteSpace: 'nowrap' }}
+											>
 												Поиск по автору
 											</Form.Label>
 											<Form.Group controlId='formAuthor'>
@@ -246,6 +269,7 @@ const FindTopic = () => {
 													placeholder='Введите автора'
 													value={author.author}
 													onChange={handleChanges}
+													style={{ whiteSpace: 'nowrap' }}
 												/>
 											</Form.Group>
 										</Form>
@@ -253,13 +277,17 @@ const FindTopic = () => {
 
 									<Card className='p-3 shadow-sm flex-grow-1'>
 										<Form>
-											<Form.Label className='fw-bold'>
+											<Form.Label
+												className='fw-bold'
+												style={{ whiteSpace: 'nowrap' }}
+											>
 												Поиск по форуму
 											</Form.Label>
 											<Form.Select
 												aria-label='Выберите форум'
 												onChange={handleForumChange}
 												className='mt-2'
+												style={{ whiteSpace: 'nowrap' }}
 											>
 												<option value='all'>Все форумы</option>
 												{forums.map(renderForums)}

@@ -66,20 +66,137 @@ const CustomNavbar = () => {
 					<Stack direction='horizontal' gap={3} className='form-group'>
 						<b>PRIME-LB</b>
 
-						{token && (
-							<Button variant='outline-light' href='/add_topic'>
-								Создать тему
-							</Button>
-						)}
+						<div className='d-none d-lg-block'>
+							{token && (
+								<Button variant='outline-light' href='/add_topic'>
+									Создать тему
+								</Button>
+							)}
+						</div>
 					</Stack>
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls='responsive-navbar-nav' />
 
 				<Navbar.Collapse id='responsive-navbar-nav'>
 					<Nav className='me-auto'></Nav>
-					<Stack direction='horizontal' gap={3} className='form-group'>
-						<div>
+					<div className='d-none d-lg-block'>
+						<Stack direction='horizontal' gap={3} className='form-group'>
+							<>
+								<Stack direction='horizontal' gap={2} className='form-group'>
+									<Button
+										variant='outline-light'
+										href={
+											findTopic.find !== undefined
+												? `/find_topic?find_topic=${findTopic.find}`
+												: '#'
+										}
+									>
+										Найти
+									</Button>
+									<Form.Group controlId='formText'>
+										<Form.Control
+											name='find'
+											type='text'
+											placeholder='Введите название'
+											value={findTopic.find}
+											onChange={handleChanges}
+										/>
+									</Form.Group>
+								</Stack>
+							</>
+
+							{token ? (
+								<>
+									<Nav>
+										<Dropdown align='end'>
+											<Dropdown.Toggle
+												as='a'
+												id='dropdown-custom-components'
+												className='custom-dropdown-toggle text-decoration-none'
+												style={{ textDecoration: 'none' }}
+											>
+												<Stack direction='horizontal' gap={2}>
+													<h5 style={{ marginTop: '4px', color: '#ffffff' }}>
+														{user.nickname}
+													</h5>
+													{user.profile && (
+														<Image
+															src={`http://localhost:5000/${user.profile.image}`}
+															roundedCircle
+															style={{
+																cursor: 'pointer',
+																width: '40px',
+																height: '40px',
+															}}
+														/>
+													)}
+												</Stack>
+											</Dropdown.Toggle>
+
+											<Dropdown.Menu style={{ backgroundColor: '#373D3F' }}>
+												<Container>
+													<Dropdown.Item
+														href={`/profile?id=${user.id}`}
+														className='dropdown_item'
+													>
+														<b>Профиль</b>
+													</Dropdown.Item>
+													<Dropdown.Item
+														href='/settings'
+														className='dropdown_item'
+													>
+														<b>Настройки</b>
+													</Dropdown.Item>
+													<Dropdown.Divider
+														style={{ backgroundColor: '#ffffff' }}
+													/>
+													<Dropdown.Item
+														className='dropdown_item_exit'
+														onClick={handleLogout}
+													>
+														<b>Выход</b>
+													</Dropdown.Item>
+												</Container>
+											</Dropdown.Menu>
+										</Dropdown>
+									</Nav>
+								</>
+							) : location.pathname === '/login' ? (
+								<Button
+									variant='outline-light'
+									onClick={() => handleNavigate('/register')}
+								>
+									Регистрация
+								</Button>
+							) : (
+								<Button
+									variant='outline-light'
+									onClick={() => handleNavigate('/login')}
+								>
+									Войти
+								</Button>
+							)}
+						</Stack>
+					</div>
+
+					<div className='d-block d-lg-none mt-3 mb-1'>
+						<Stack direction='vertical' gap={3} className='form-group'>
+							{token && (
+								<Button variant='outline-light' href='/add_topic'>
+									Создать тему
+								</Button>
+							)}
+
 							<Stack direction='horizontal' gap={2} className='form-group'>
+								<Form.Group controlId='formText' className='w-100'>
+									<Form.Control
+										name='find'
+										type='text'
+										placeholder='Введите название'
+										value={findTopic.find}
+										onChange={handleChanges}
+									/>
+								</Form.Group>
 								<Button
 									variant='outline-light'
 									href={
@@ -90,90 +207,44 @@ const CustomNavbar = () => {
 								>
 									Найти
 								</Button>
-								<Form.Group controlId='formText'>
-									<Form.Control
-										name='find'
-										type='text'
-										placeholder='Введите название'
-										value={findTopic.find}
-										onChange={handleChanges}
-									/>
-								</Form.Group>
 							</Stack>
-						</div>
 
-						{token ? (
-							<>
-								<Nav>
-									<Dropdown align='end'>
-										<Dropdown.Toggle
-											as='a'
-											id='dropdown-custom-components'
-											className='custom-dropdown-toggle text-decoration-none'
-											style={{ textDecoration: 'none' }}
-										>
-											<Stack direction='horizontal' gap={2}>
-												<h5 style={{ marginTop: '4px', color: '#ffffff' }}>
-													{user.nickname}
-												</h5>
-												{user.profile && (
-													<Image
-														src={`http://localhost:5000/${user.profile.image}`}
-														roundedCircle
-														style={{
-															cursor: 'pointer',
-															width: '40px',
-															height: '40px',
-														}}
-													/>
-												)}
-											</Stack>
-										</Dropdown.Toggle>
-
-										<Dropdown.Menu style={{ backgroundColor: '#373D3F' }}>
-											<Container>
-												<Dropdown.Item
-													href={`/profile?id=${user.id}`}
-													className='dropdown_item'
-												>
-													<b>Профиль</b>
-												</Dropdown.Item>
-												<Dropdown.Item
-													href='/settings'
-													className='dropdown_item'
-												>
-													<b>Настройки</b>
-												</Dropdown.Item>
-												<Dropdown.Divider
-													style={{ backgroundColor: '#ffffff' }}
-												/>
-												<Dropdown.Item
-													className='dropdown_item_exit'
-													onClick={handleLogout}
-												>
-													<b>Выход</b>
-												</Dropdown.Item>
-											</Container>
-										</Dropdown.Menu>
-									</Dropdown>
-								</Nav>
-							</>
-						) : location.pathname === '/login' ? (
-							<Button
-								variant='outline-light'
-								onClick={() => handleNavigate('/register')}
-							>
-								Регистрация
-							</Button>
-						) : (
-							<Button
-								variant='outline-light'
-								onClick={() => handleNavigate('/login')}
-							>
-								Войти
-							</Button>
-						)}
-					</Stack>
+							{token ? (
+								<>
+									<Button
+										variant='outline-light'
+										href={`/profile?id=${user.id}`}
+									>
+										<b>Профиль</b>
+									</Button>
+									<Button variant='outline-light' href='/settings'>
+										<b>Настройки</b>
+									</Button>
+									<Button
+										variant='outline-light'
+										onClick={handleLogout}
+										className='dropdown_item_exit'
+									>
+										<b>Выход</b>
+									</Button>
+								</>
+							) : location.pathname === '/login' ? (
+								<Button
+									variant='outline-light'
+									onClick={() => handleNavigate('/register')}
+								>
+									Регистрация
+								</Button>
+							) : (
+								<Button
+									variant='outline-light'
+									onClick={() => handleNavigate('/login')}
+								>
+									Войти
+								</Button>
+							)}
+						</Stack>
+					</div>
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>

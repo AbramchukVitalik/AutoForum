@@ -41,10 +41,14 @@ const Home = () => {
 	const renderForums = (forums, index) => (
 		<tr key={index}>
 			<td>
-				<a href={`/topics?id=${forums.id}`} className='text-decoration-none'>
+				<a
+					href={`/topics?id=${forums.id}`}
+					className='text-decoration-none'
+					style={{ whiteSpace: 'nowrap' }}
+				>
 					<h5>{forums.title}</h5>
 				</a>
-				<p>{forums.description}</p>
+				<p style={{ whiteSpace: 'nowrap' }}>{forums.description}</p>
 			</td>
 			<td>{forums.numberOfTopics}</td>
 			<td>{forums.numberOfMessages}</td>
@@ -67,7 +71,7 @@ const Home = () => {
 		<div className='outer-card'>
 			<Card className='home-card'>
 				<Card.Body>
-					<div style={{ margin: '30px' }}>
+					<div style={{ margin: '30px' }} className='inside'>
 						<Stack gap={3}>
 							{role === 'SUPER_ADMIN' && (
 								<div
@@ -82,6 +86,7 @@ const Home = () => {
 										onClick={() => handleNavigate('/add_forum')}
 										style={{
 											borderRadius: '8px',
+											whiteSpace: 'nowrap',
 										}}
 									>
 										Добавить форум
@@ -89,8 +94,11 @@ const Home = () => {
 								</div>
 							)}
 
-							<div style={{ maxHeight: '600px', overflowY: 'auto' }}>
-								<Table striped bordered hover>
+							<div
+								style={{ maxHeight: '600px', overflowY: 'auto' }}
+								className='table-responsive'
+							>
+								<Table striped bordered hover responsive>
 									<thead>
 										<tr>
 											<th>Форум</th>
