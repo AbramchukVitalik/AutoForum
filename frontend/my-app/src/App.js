@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './pages/Navbar.js'
+import Footer from './pages/Footer.js'
 import Login from './pages/Login.js'
 import Home from './pages/Home.js'
 import Register from './pages/Register.js'
@@ -54,6 +55,8 @@ function App() {
 					<Route path='/find_topic' element={<FindTopic />} />
 				</Routes>
 			</div>
+
+			<Footer />
 		</Router>
 	)
 }

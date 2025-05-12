@@ -313,12 +313,21 @@ const FindTopic = () => {
 											filteredTopics.map(renderTopics)
 										) : (
 											<tr>
-												<td colSpan='4' style={{ textAlign: 'center' }}>
-													<h2>
-														К сожалению, таких тем пока нет. Но не волнуйтесь —
-														вы можете создать новую тему прямо сейчас!
-													</h2>
-												</td>
+												{role === 'SUPER_ADMIN' ? (
+													<td colSpan='5' style={{ textAlign: 'center' }}>
+														<h2>
+															К сожалению, таких тем пока нет. Но не волнуйтесь
+															— вы можете создать новую тему прямо сейчас!
+														</h2>
+													</td>
+												) : (
+													<td colSpan='4' style={{ textAlign: 'center' }}>
+														<h2>
+															К сожалению, таких тем пока нет. Но не волнуйтесь
+															— вы можете создать новую тему прямо сейчас!
+														</h2>
+													</td>
+												)}
 											</tr>
 										)}
 									</tbody>
