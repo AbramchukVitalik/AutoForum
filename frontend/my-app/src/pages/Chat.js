@@ -284,7 +284,7 @@ const Chat = () => {
 				<tr style={{ height: '30px' }}>
 					<td
 						className='text-end align-top'
-						style={{ fontSize: '0.8rem', color: '#666' }}
+						style={{ fontSize: '0.8rem', color: '#656' }}
 					>
 						<small>
 							<b>{new Date(message.createdAt).toLocaleString()}</b>
