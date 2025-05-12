@@ -9,13 +9,16 @@ const Footer = () => {
 					&copy; 2025 PRIME-LB. Все права защищены.
 				</p>
 				<p className='text-light'>
-					<a href='/privacy' className='text-light'>
-						Политика конфиденциальности
+					<a
+						href='https://github.com/AbramchukVitalik/AutoForum/'
+						className='text-light'
+					>
+						Github
 					</a>{' '}
 					|
-					<a href='/terms' className='text-light'>
+					<a href='https://prime-lb.by/auto-parts' className='text-light'>
 						{' '}
-						Условия использования
+						Магазин
 					</a>
 				</p>
 			</div>
