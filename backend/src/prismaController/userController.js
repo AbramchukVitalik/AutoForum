@@ -143,6 +143,8 @@ export const updateUser = async (req, res) => {
 			like,
 			postsNum,
 			messageId,
+			baned,
+			muted,
 		} = req.body
 
 		const user = await prisma.user.findUnique({
@@ -196,6 +198,8 @@ export const updateUser = async (req, res) => {
 		if (email) updateData.email = email
 		if (hashedPassword) updateData.password = hashedPassword
 		if (nickname) updateData.nickname = nickname
+		if (baned) updateData.baned = baned
+		if (muted) updateData.muted = muted
 
 		const profileUpdate = {}
 		if (bio) profileUpdate.bio = bio
@@ -255,6 +259,72 @@ export const deleteUser = async (req, res) => {
 		})
 
 		res.status(200).json(deleteUser)
+	} catch (error) {
+		console.error(error)
+		res.status(500).json({ error: error.message })
+	}
+}
+
+export const banUser = async (req, res) => {
+	try {
+		const { id, what } = req.params
+		const { cause, selectedPeriod } = req.body
+
+		const today = new Date()
+		const period = parseInt(selectedPeriod, 10)
+		today.setDate(today.getDate() + period)
+
+		let baned = { cause: cause }
+
+		if (what === 'ban') {
+			baned.isBaned = true
+			baned.baned = today
+		} else if (what === 'mute') {
+			baned.isMuted = true
+			baned.muted = today
+		} else {
+			return res.status(500).json({ error: 'What is not true' })
+		}
+
+		const bannedUser = await prisma.$transaction(async prisma => {
+			const user = await prisma.user.update({
+				where: { id: parseInt(id) },
+				data: baned,
+			})
+			return user
+		})
+
+		res.status(200).json(bannedUser)
+	} catch (error) {
+		console.error(error)
+		res.status(500).json({ error: error.message })
+	}
+}
+
+export const unbanUser = async (req, res) => {
+	try {
+		const { id, what } = req.params
+
+		let unbaned = {}
+		if (what === 'ban') {
+			unbaned.isBaned = false
+			unbaned.baned = null
+		} else if (what === 'mute') {
+			unbaned.isMuted = false
+			unbaned.muted = null
+		} else {
+			return res.status(500).json({ error: 'What is not true' })
+		}
+
+		const unbannedUser = await prisma.$transaction(async prisma => {
+			const user = await prisma.user.update({
+				where: { id: parseInt(id) },
+				data: unbaned,
+			})
+			return user
+		})
+
+		res.status(200).json(unbannedUser)
 	} catch (error) {
 		console.error(error)
 		res.status(500).json({ error: error.message })

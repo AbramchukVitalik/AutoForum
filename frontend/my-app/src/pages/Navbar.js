@@ -47,6 +47,11 @@ const CustomNavbar = () => {
 			const response = await axios.get(
 				`http://localhost:5000/api/getUser/${id}`
 			)
+
+			if (response.data.user.isBaned === true) {
+				navigate('/baned')
+			}
+
 			setUser(response.data.user)
 		} catch (error) {
 			console.error('Error fetching user:', error)

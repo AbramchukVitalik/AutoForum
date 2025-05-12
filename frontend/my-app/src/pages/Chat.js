@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import '../css/HomeCard.css'
 import { jwtDecode } from 'jwt-decode'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { Button, Form, Card, Image, Stack } from 'react-bootstrap'
 import Table from 'react-bootstrap/Table'
@@ -9,6 +10,7 @@ const Chat = () => {
 	const token = localStorage.getItem('token')
 	const urlParams = new URLSearchParams(window.location.search)
 	const idTopics = urlParams.get('id')
+	const navigate = useNavigate()
 
 	const [user, setUser] = useState({ profile: {} })
 	const [author, setAuthor] = useState({ profile: {} })
@@ -93,7 +95,7 @@ const Chat = () => {
 		if (token) {
 			try {
 				const decodedToken = jwtDecode(token)
-				const userData = await fetchUser(decodedToken.id)
+				const userData = await fetchUser(decodedToken.id, true)
 				setRole(decodedToken.role)
 				setUser(userData)
 			} catch (error) {
@@ -104,14 +106,33 @@ const Chat = () => {
 		}
 	}
 
-	const fetchUser = async id => {
+	const fetchUser = async (id, checkRole = false) => {
 		try {
 			const response = await axios.get(
 				`http://localhost:5000/api/getUser/${id}`
 			)
+
+			if (
+				checkRole === true &&
+				response.data.user.muted !== null &&
+				new Date(response.data.user.muted) < new Date()
+			) {
+				console.log('Кавабанга')
+				unMute(response.data.user.id)
+			}
 			return response.data.user
 		} catch (error) {
 			console.error('Error fetching user:', error)
+		}
+	}
+
+	const unMute = async id => {
+		try {
+			await axios.post(`http://localhost:5000/api/unbanUser/${id}/mute`, {})
+
+			navigate(0)
+		} catch (error) {
+			console.error('Error banOrMute:', error)
 		}
 	}
 
@@ -368,7 +389,24 @@ const Chat = () => {
 						className='position-absolute bottom-0 start-0 p-4'
 						style={{ background: '#fff', width: '100%' }}
 					>
-						{role === 'USER' || role === 'ADMIN' || role === 'SUPER_ADMIN' ? (
+						{!token ? (
+							<h5>Зарегистрируйтесь или войдите чтобы писать сообщения</h5>
+						) : user.isMuted ? (
+							<h5>
+								Вы замучены до "
+								{new Date(user.muted).toLocaleString('ru-RU', {
+									day: 'numeric',
+									month: 'long',
+									year: 'numeric',
+									hour: '2-digit',
+									minute: '2-digit',
+									second: '2-digit',
+								})}
+								" по причине "{user.cause}"
+							</h5>
+						) : role === 'USER' ||
+						  role === 'ADMIN' ||
+						  role === 'SUPER_ADMIN' ? (
 							<>
 								<Form.Label>Введите сообщение:</Form.Label>
 								<Stack direction='horizontal' gap={2}>
