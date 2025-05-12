@@ -295,7 +295,7 @@ const Chat = () => {
 							className='ms-2'
 							onClick={() => handleToggleLike(message)}
 						>
-							👍 {message.likes}
+							{message.likes === 0 ? <>👍</> : <>👍 {message.likes}</>}
 						</Button>
 					</td>
 				</tr>
