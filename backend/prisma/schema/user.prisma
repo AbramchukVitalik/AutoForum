@@ -5,6 +5,13 @@ model User {
   nickname  String
   password  String
 
+  isBaned  Boolean?
+  isMuted   Boolean?
+  baned     DateTime?
+  muted     DateTime?
+
+  cause     String?
+
   role      Role     @default(USER)
   profile   Profile?
 }

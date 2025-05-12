@@ -12,6 +12,9 @@ import AddTopic from './pages/AddTopic.js'
 import FindTopic from './pages/FindTopic.js'
 import AddForum from './pages/AddForum.js'
 import DeleteForum from './pages/DeleteForumOrTopic.js'
+import BanOrMute from './pages/BanOrMute.js'
+import UnbanOrUnmute from './pages/UnbanOrUnmute.js'
+import Baned from './pages/Baned.js'
 
 import { jwtDecode } from 'jwt-decode'
 
@@ -53,6 +56,9 @@ function App() {
 					<Route path='/topics' element={<Topics />} />
 					<Route path='/chat' element={<Chat />} />
 					<Route path='/find_topic' element={<FindTopic />} />
+					<Route path='/ban_or_mute' element={<BanOrMute />} />
+					<Route path='/unban_or_unmute' element={<UnbanOrUnmute />} />
+					<Route path='/baned' element={<Baned />} />
 				</Routes>
 			</div>
 
