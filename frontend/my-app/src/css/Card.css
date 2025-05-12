@@ -7,7 +7,6 @@ body {
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
-	/* Если хочется, чтобы фон был фиксирован */
 	background-attachment: fixed;
 }
 

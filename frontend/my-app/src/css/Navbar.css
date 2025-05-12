@@ -2,11 +2,11 @@
 	position: fixed;
 	top: 0;
 	width: 100%;
-	z-index: 1030; /* Убедитесь, что элемент находится поверх других элементов */
+	z-index: 1030;
 }
 
 .custom-dropdown-toggle {
-	color: #ffffff; /* Цвет текста кнопки */
+	color: #ffffff;
 }
 .custom-dropdown-toggle::after {
 	display: none;

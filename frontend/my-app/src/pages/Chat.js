@@ -41,12 +41,10 @@ const Chat = () => {
 				const newMessage = eventData.new_val || eventData
 
 				setMessages(prevMessages => {
-					// Проверяем, существует ли уже сообщение с этим id
 					const existingIndex = prevMessages.findIndex(
 						m => m.id === newMessage.id
 					)
 					if (existingIndex !== -1) {
-						// Если сообщение найдено, обновляем его
 						const updatedMessages = [...prevMessages]
 						updatedMessages[existingIndex] = {
 							...updatedMessages[existingIndex],
@@ -54,7 +52,6 @@ const Chat = () => {
 						}
 						return updatedMessages
 					} else {
-						// Если сообщения ещё нет – добавляем его
 						return [...prevMessages, newMessage]
 					}
 				})
@@ -75,11 +72,9 @@ const Chat = () => {
 
 	useEffect(() => {
 		if (messages.length > 0) {
-			// Получаем уникальные идентификаторы пользователей из сообщений
 			const uniqueUserIds = Array.from(new Set(messages.map(msg => msg.userId)))
 			uniqueUserIds.forEach(userId => {
 				if (!usersData[userId]) {
-					// Если пользователь ещё не загружен, выполняем запрос
 					fetchUser(userId).then(user => {
 						if (user) {
 							setUsersData(prev => ({ ...prev, [userId]: user }))
@@ -236,7 +231,6 @@ const Chat = () => {
 		const msgUser = usersData[message.userId]
 
 		if (!msgUser || !msgUser.profile) {
-			// Если данные о пользователе еще не загружены, можно вернуть заглушку или пустой элемент
 			return (
 				<tbody key={index}>
 					<tr>
