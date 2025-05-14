@@ -117,7 +117,6 @@ const Chat = () => {
 				response.data.user.muted !== null &&
 				new Date(response.data.user.muted) < new Date()
 			) {
-				console.log('Кавабанга')
 				unMute(response.data.user.id)
 			}
 			return response.data.user
