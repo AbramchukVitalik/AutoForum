@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Stack, Button, Form, Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Card, Stack, Form, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
+import '../css/Card.css'
 
 const BanOrMute = () => {
 	const token = localStorage.getItem('token')
@@ -69,15 +70,15 @@ const BanOrMute = () => {
 	}
 
 	return (
-		<Container className='d-flex justify-content-center align-items-center vh-100'>
+		<Container className='d-flex justify-content-center align-items-center vh-100 px-3'>
 			<Row className='w-100'>
 				<Col xs={12} sm={10} md={8} lg={6} className='mx-auto'>
-					<Card className='shadow'>
-						<Card.Body className='m-5'>
+					<Card className='card'>
+						<Card.Body className='p-4'>
 							<Stack gap={3}>
 								<Form.Group
 									controlId='periodSelect'
-									className='d-flex align-items-center'
+									className='d-flex align-items-center flex-nowrap'
 								>
 									<Form.Label className='me-2 mb-0'>
 										Выберите период времени:
@@ -98,7 +99,7 @@ const BanOrMute = () => {
 								</Form.Group>
 
 								<Form.Group controlId='formCause'>
-									<Form.Label className='mb-0'>Причина:</Form.Label>
+									<Form.Label className='mb-1'>Причина:</Form.Label>
 									<Form.Control
 										name='cause'
 										type='text'
@@ -108,13 +109,18 @@ const BanOrMute = () => {
 									/>
 								</Form.Group>
 
-								<Stack direction='horizontal' gap={3}>
-									<Button variant='secondary' onClick={banOrMute}>
+								<Stack direction='horizontal' gap={3} className='flex-wrap'>
+									<Button
+										variant='secondary'
+										onClick={banOrMute}
+										className='flex-fill'
+									>
 										{what === 'ban' ? 'Забанить' : 'Замутить'}
 									</Button>
 									<Button
 										variant='outline-secondary'
 										onClick={() => navigate(-1)}
+										className='flex-fill'
 									>
 										Отмена
 									</Button>

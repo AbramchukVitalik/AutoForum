@@ -1,10 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react'
-import '../css/HomeCard.css'
+import '../css/Card.css'
 import { jwtDecode } from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { Button, Form, Card, Image, Stack } from 'react-bootstrap'
-import Table from 'react-bootstrap/Table'
+import {
+	Button,
+	Form,
+	Card,
+	Image,
+	Stack,
+	Container,
+	Row,
+	Col,
+	Table,
+} from 'react-bootstrap'
 
 const Chat = () => {
 	const token = localStorage.getItem('token')
@@ -298,7 +307,16 @@ const Chat = () => {
 							)}
 						</div>
 					</td>
-					<td className='text-start align-top'>{message.content}</td>
+					<td
+						className='text-start align-top'
+						style={{
+							whiteSpace: 'normal',
+							wordBreak: 'break-word',
+							width: '100%',
+						}}
+					>
+						{message.content}
+					</td>
 				</tr>
 
 				<tr style={{ height: '30px' }}>
@@ -327,118 +345,169 @@ const Chat = () => {
 	}
 
 	return (
-		<div className='outer-card'>
-			<Card className='home-card'>
-				<Card.Body>
-					<div
-						style={{ margin: '30px', maxHeight: '520px', overflowY: 'auto' }}
-					>
-						<h5>Вопрос:</h5>
-						<Table striped bordered hover>
-							<thead>
-								<tr>
-									<th style={{ width: '220px' }} rowSpan='2'>
-										<div className='d-flex flex-column justify-content-center align-items-center'>
-											<Image
-												src={`http://localhost:5000/${author.profile?.image}`}
-												roundedCircle
-												className='profile-image'
-												style={{ width: '150px', height: 'auto' }}
-											/>
-											<a
-												href={`/profile?id=${author.id}`}
-												className='text-decoration-none'
-											>
-												<h5>{author.nickname}</h5>
-											</a>
-											<h6>Количество лайков: {author.profile.like}</h6>
-											<h6>Сообщения: {author.profile.postsNum}</h6>
-										</div>
-									</th>
-									<th className='text-start align-top'>
-										{topic.question || 'Тема не найдена'}
-									</th>
-								</tr>
-								<tr style={{ height: '30px' }}>
-									<td
-										className='text-end align-top'
-										style={{ fontSize: '0.8rem', color: '#666' }}
+		<Container
+			fluid
+			className='d-flex justify-content-center align-items-center min-vh-100'
+		>
+			<Row className='w-100 justify-content-center'>
+				<Col xs={12} md={10} lg={8}>
+					<Card className='card' style={{ marginTop: '5%' }}>
+						<Card.Body className='p-4'>
+							<Stack gap={3} className='m-3'>
+								<div
+									className='table-responsive'
+									style={{
+										maxHeight: '520px',
+										overflowY: 'auto',
+										overflowX: 'auto',
+									}}
+								>
+									<h5>Вопрос:</h5>
+									<Table
+										striped
+										bordered
+										hover
+										responsive
+										style={{
+											minWidth: '500px',
+											tableLayout: 'fixed',
+											width: '100%',
+										}}
 									>
-										<small>
-											<b>{new Date(topic.createAt).toLocaleString()}</b>
-										</small>
-									</td>
-								</tr>
-							</thead>
-						</Table>
-
-						<h5>Ответы:</h5>
-						<Table striped bordered hover>
-							{messages && messages.length > 0 ? (
-								messages.map(renderMessages)
-							) : (
-								<tr>
-									<td>Нет сообщений</td>
-								</tr>
-							)}
-						</Table>
-					</div>
-
-					<div
-						className='position-absolute bottom-0 start-0 p-4'
-						style={{ background: '#fff', width: '100%' }}
-					>
-						{!token ? (
-							<h5>Зарегистрируйтесь или войдите чтобы писать сообщения</h5>
-						) : user.isMuted ? (
-							<h5>
-								Вы замучены до "
-								{new Date(user.muted).toLocaleString('ru-RU', {
-									day: 'numeric',
-									month: 'long',
-									year: 'numeric',
-									hour: '2-digit',
-									minute: '2-digit',
-									second: '2-digit',
-								})}
-								" по причине "{user.cause}"
-							</h5>
-						) : role === 'USER' ||
-						  role === 'ADMIN' ||
-						  role === 'SUPER_ADMIN' ? (
-							<>
-								<Form.Label>Введите сообщение:</Form.Label>
-								<Stack direction='horizontal' gap={2}>
-									<div className='flex-grow-1'>
-										<Form onSubmit={sendMessage}>
-											<div className='d-flex'>
-												<Form.Control
-													name='message'
-													type='text'
-													placeholder='Введите сообщение'
-													value={values.message || ''}
-													onChange={handleChanges}
-													className='flex-grow-1'
-												/>
-												<Button
-													className='submit-button ms-2'
-													variant='secondary'
-													type='submit'
+										<thead>
+											<tr>
+												<th style={{ width: '220px' }} rowSpan='2'>
+													<div className='d-flex flex-column justify-content-center align-items-center'>
+														<Image
+															src={`http://localhost:5000/${author.profile?.image}`}
+															roundedCircle
+															className='profile-image'
+															style={{ width: '150px', height: 'auto' }}
+															alt='Author avatar'
+														/>
+														<a
+															href={`/profile?id=${author.id}`}
+															className='text-decoration-none'
+														>
+															<h5>{author.nickname}</h5>
+														</a>
+														<h6 style={{ whiteSpace: 'nowrap' }}>
+															Количество лайков: {author.profile.like}
+														</h6>
+														<h6 style={{ whiteSpace: 'nowrap' }}>
+															Сообщения: {author.profile.postsNum}
+														</h6>
+													</div>
+												</th>
+												<th
+													className='text-start align-top'
+													style={{
+														whiteSpace: 'normal',
+														wordBreak: 'break-word',
+														width: '100%',
+													}}
 												>
-													Отправить
-												</Button>
-											</div>
-										</Form>
-									</div>
-								</Stack>
-							</>
-						) : (
-							<h5>Зарегистрируйтесь или войдите чтобы писать сообщения</h5>
-						)}
-					</div>
-				</Card.Body>
-			</Card>
-		</div>
+													{topic.question || 'Тема не найдена'}
+												</th>
+											</tr>
+											<tr style={{ height: '30px' }}>
+												<td
+													className='text-end align-top'
+													style={{ fontSize: '0.8rem', color: '#666' }}
+												>
+													<small>
+														<b>{new Date(topic.createAt).toLocaleString()}</b>
+													</small>
+												</td>
+											</tr>
+										</thead>
+									</Table>
+
+									<h5>Ответы:</h5>
+									<Table
+										striped
+										bordered
+										hover
+										responsive
+										style={{
+											minWidth: '500px',
+											tableLayout: 'fixed',
+											width: '100%',
+										}}
+									>
+										{messages && messages.length > 0 ? (
+											messages.map(renderMessages)
+										) : (
+											<tbody>
+												<tr>
+													<td colSpan='2' className='text-center'>
+														Нет сообщений
+													</td>
+												</tr>
+											</tbody>
+										)}
+									</Table>
+								</div>
+
+								<div className='mt-3'>
+									{!token ? (
+										<h5>
+											Зарегистрируйтесь или войдите чтобы писать сообщения
+										</h5>
+									) : user.isMuted ? (
+										<h5>
+											Вы замучены до "
+											{new Date(user.muted).toLocaleString('ru-RU', {
+												day: 'numeric',
+												month: 'long',
+												year: 'numeric',
+												hour: '2-digit',
+												minute: '2-digit',
+												second: '2-digit',
+											})}
+											" по причине "{user.cause}"
+										</h5>
+									) : role === 'USER' ||
+									  role === 'ADMIN' ||
+									  role === 'SUPER_ADMIN' ? (
+										<>
+											<Form.Label>Введите сообщение:</Form.Label>
+											<Stack direction='horizontal' gap={2}>
+												<div className='flex-grow-1'>
+													<Form onSubmit={sendMessage}>
+														<div className='d-flex'>
+															<Form.Control
+																name='message'
+																type='text'
+																placeholder='Введите сообщение'
+																value={values.message || ''}
+																onChange={handleChanges}
+																className='flex-grow-1'
+															/>
+															<Button
+																className='submit-button ms-2'
+																variant='secondary'
+																type='submit'
+															>
+																Отправить
+															</Button>
+														</div>
+													</Form>
+												</div>
+											</Stack>
+										</>
+									) : (
+										<h5>
+											Зарегистрируйтесь или войдите чтобы писать сообщения
+										</h5>
+									)}
+								</div>
+							</Stack>
+						</Card.Body>
+					</Card>
+				</Col>
+			</Row>
+		</Container>
 	)
 }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Card, Stack } from 'react-bootstrap'
+import { Container, Row, Col, Card, Stack, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import '../css/Card.css'
@@ -60,66 +60,70 @@ const DeleteForum = () => {
 	}
 
 	return (
-		<div className='outer-card'>
-			<Card className='card-center'>
-				<Card.Body className='inside_the_card'>
-					<Stack gap={3} style={{ textAlign: 'center' }}>
-						{deleted === 'forum' && (
-							<>
-								<h5>
-									Вы действительно хотите удалить форум "{forum.title}"? Это
-									действие нельзя будет отменить
-								</h5>
-								<Stack gap={2} direction='horizontal' style={{ width: '100%' }}>
-									<Button
-										variant='outline-secondary'
-										type='button'
-										onClick={() => navigate(-1)}
-										style={{ flex: 1 }}
-									>
-										Отмена
-									</Button>
-									<Button
-										variant='outline-danger'
-										type='button'
-										onClick={deleteForum}
-										style={{ flex: 1 }}
-									>
-										Удалить
-									</Button>
-								</Stack>
-							</>
-						)}
-						{deleted === 'topic' && (
-							<>
-								<h5>
-									Вы действительно хотите удалить тему "{topic.title}"? Это
-									действие нельзя будет отменить
-								</h5>
-								<Stack gap={2} direction='horizontal' style={{ width: '100%' }}>
-									<Button
-										variant='outline-secondary'
-										type='button'
-										onClick={() => navigate(-1)}
-										style={{ flex: 1 }}
-									>
-										Отмена
-									</Button>
-									<Button
-										variant='outline-danger'
-										type='button'
-										onClick={deleteTopic}
-										style={{ flex: 1 }}
-									>
-										Удалить
-									</Button>
-								</Stack>
-							</>
-						)}
-					</Stack>
-				</Card.Body>
-			</Card>
-		</div>
+		<Container className='my-3'>
+			<Row className='justify-content-center'>
+				<Col xs={12} sm={10} md={8} lg={6}>
+					<Card className='card' style={{ marginTop: '45%' }}>
+						<Card.Body className='inside_the_card p-5'>
+							<Stack gap={3} className='text-center'>
+								{deleted === 'forum' && (
+									<>
+										<h5>
+											Вы действительно хотите удалить форум "{forum.title}"? Это
+											действие нельзя будет отменить
+										</h5>
+										<Stack gap={2} direction='horizontal' className='w-100'>
+											<Button
+												variant='outline-secondary'
+												type='button'
+												onClick={() => navigate(-1)}
+												className='flex-fill'
+											>
+												Отмена
+											</Button>
+											<Button
+												variant='outline-danger'
+												type='button'
+												onClick={deleteForum}
+												className='flex-fill'
+											>
+												Удалить
+											</Button>
+										</Stack>
+									</>
+								)}
+								{deleted === 'topic' && (
+									<>
+										<h5>
+											Вы действительно хотите удалить тему "{topic.title}"? Это
+											действие нельзя будет отменить
+										</h5>
+										<Stack gap={2} direction='horizontal' className='w-100'>
+											<Button
+												variant='outline-secondary'
+												type='button'
+												onClick={() => navigate(-1)}
+												className='flex-fill'
+											>
+												Отмена
+											</Button>
+											<Button
+												variant='outline-danger'
+												type='button'
+												onClick={deleteTopic}
+												className='flex-fill'
+											>
+												Удалить
+											</Button>
+										</Stack>
+									</>
+								)}
+							</Stack>
+						</Card.Body>
+					</Card>
+				</Col>
+			</Row>
+		</Container>
 	)
 }
 

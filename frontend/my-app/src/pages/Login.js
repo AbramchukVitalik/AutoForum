@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Button, Form, Card, Stack } from 'react-bootstrap'
+import { Container, Row, Col, Card, Stack, Form, Button } from 'react-bootstrap'
 import axios from 'axios'
-import '../css/Login.css'
+import '../css/Card.css'
 import { useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
 
@@ -48,51 +48,59 @@ const Login = () => {
 	}
 
 	return (
-		<div className='outer'>
-			<Card
-				className='login-card'
-				style={{
-					backgroundColor: 'rgba(255, 255, 255, 0.9)', // Прозрачность 70%
-					boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-				}}
-			>
-				<Card.Body>
-					<Stack gap={3} className='col-md-10 mx-auto'>
-						<h2 className='text-center'>Вход</h2>
-						<Form onSubmit={handleSubmit}>
-							<Form.Group controlId='formEmail'>
-								<Form.Label>Email адрес</Form.Label>
-								<Form.Control
-									name='email'
-									type='email'
-									placeholder='Введите Email'
-									value={values.email}
-									onChange={handleChanges}
-								/>
-							</Form.Group>
-							<Form.Group controlId='formPassword'>
-								<Form.Label>Пароль</Form.Label>
-								<Form.Control
-									name='password'
-									type='password'
-									placeholder='Введите пароль'
-									value={values.password}
-									onChange={handleChanges}
-								/>
-							</Form.Group>
-							<Button className='w-100 mt-3' variant='secondary' type='submit'>
-								Войти
-							</Button>
-						</Form>
-						{message && (
-							<p className='text-center mt-3' style={{ color: 'red' }}>
-								{message}
-							</p>
-						)}
-					</Stack>
-				</Card.Body>
-			</Card>
-		</div>
+		<Container className='d-flex justify-content-center align-items-center vh-100 px-3'>
+			<Row className='w-100 justify-content-center'>
+				<Col xs={12} sm={10} md={8} lg={6}>
+					<Card
+						className='card shadow'
+						style={{
+							backgroundColor: 'rgba(255, 255, 255, 0.9)',
+							boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+						}}
+					>
+						<Card.Body className='p-5'>
+							<Stack gap={3}>
+								<h2 className='text-center'>Вход</h2>
+								<Form onSubmit={handleSubmit}>
+									<Form.Group controlId='formEmail'>
+										<Form.Label>Email адрес</Form.Label>
+										<Form.Control
+											name='email'
+											type='email'
+											placeholder='Введите Email'
+											value={values.email}
+											onChange={handleChanges}
+										/>
+									</Form.Group>
+									<Form.Group controlId='formPassword'>
+										<Form.Label>Пароль</Form.Label>
+										<Form.Control
+											name='password'
+											type='password'
+											placeholder='Введите пароль'
+											value={values.password}
+											onChange={handleChanges}
+										/>
+									</Form.Group>
+									<Button
+										className='w-100 mt-3'
+										variant='secondary'
+										type='submit'
+									>
+										Войти
+									</Button>
+								</Form>
+								{message && (
+									<p className='text-center mt-3' style={{ color: 'red' }}>
+										{message}
+									</p>
+								)}
+							</Stack>
+						</Card.Body>
+					</Card>
+				</Col>
+			</Row>
+		</Container>
 	)
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Card, Stack, Form } from 'react-bootstrap'
+import { Button, Card, Stack, Form, Container, Row, Col } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
 import axios from 'axios'
@@ -78,61 +78,64 @@ const AddTopic = () => {
 	)
 
 	return (
-		<div className='outer-card'>
-			<Card className='card-center'>
-				<Card.Body className='inside_the_card'>
-					<Stack gap={3}>
-						<Stack>
-							<h5>Форум</h5>
-							<Form.Select
-								aria-label='Выберите форум'
-								onChange={handleForumChange}
-							>
-								<option>Выберите форум</option>
-								{forums.map(renderForums)}
-							</Form.Select>
-						</Stack>
+		<Container className='d-flex justify-content-center align-items-center vh-100 px-3'>
+			<Row className='w-100'>
+				<Col xs={12} sm={10} md={8} lg={6} className='mx-auto'>
+					<Card className='card' style={{ marginTop: '5%' }}>
+						<Card.Body className='p-5'>
+							<Stack gap={3}>
+								<Stack>
+									<h5>Форум</h5>
+									<Form.Select
+										aria-label='Выберите форум'
+										onChange={handleForumChange}
+									>
+										<option>Выберите форум</option>
+										{forums.map(renderForums)}
+									</Form.Select>
+								</Stack>
 
-						<Form.Group controlId='formTitle'>
-							<h5>Название</h5>
-							<Form.Control
-								name='title'
-								type='text'
-								placeholder='Введите название'
-								value={values.title}
-								onChange={handleChanges}
-							/>
-						</Form.Group>
+								<Form.Group controlId='formTitle'>
+									<h5>Название</h5>
+									<Form.Control
+										name='title'
+										type='text'
+										placeholder='Введите название'
+										value={values.title}
+										onChange={handleChanges}
+									/>
+								</Form.Group>
 
-						<Form.Group controlId='formQuestion'>
-							<h5>Вопрос</h5>
-							<Form.Control
-								as='textarea'
-								name='question'
-								type='text'
-								placeholder='Введите вопрос'
-								value={values.question}
-								onChange={handleChanges}
-								style={{
-									height: '150px',
-									resize: 'vertical',
-									overflowY: 'auto',
-								}}
-							/>
-						</Form.Group>
+								<Form.Group controlId='formQuestion'>
+									<h5>Вопрос</h5>
+									<Form.Control
+										as='textarea'
+										name='question'
+										placeholder='Введите вопрос'
+										value={values.question}
+										onChange={handleChanges}
+										style={{
+											height: '150px',
+											resize: 'vertical',
+											overflowY: 'auto',
+										}}
+									/>
+								</Form.Group>
 
-						<Button
-							className='submit-button'
-							variant='secondary'
-							type='submit'
-							onClick={handleSubmit}
-						>
-							Создать
-						</Button>
-					</Stack>
-				</Card.Body>
-			</Card>
-		</div>
+								<Button
+									className='submit-button'
+									variant='secondary'
+									type='submit'
+									onClick={handleSubmit}
+								>
+									Создать
+								</Button>
+							</Stack>
+						</Card.Body>
+					</Card>
+				</Col>
+			</Row>
+		</Container>
 	)
 }
 

@@ -1,10 +1,18 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { Card, Form, Stack, Button } from 'react-bootstrap'
-import Table from 'react-bootstrap/Table'
+import {
+	Card,
+	Form,
+	Stack,
+	Table,
+	Container,
+	Row,
+	Col,
+	Button,
+} from 'react-bootstrap'
 import { jwtDecode } from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import '../css/HomeCard.css'
+import '../css/Card.css'
 import { sortTopics } from '../sortUtils'
 
 const Topics = () => {
@@ -100,172 +108,215 @@ const Topics = () => {
 	)
 
 	return (
-		<div className='outer-card'>
-			<Card className='find-card'>
-				<Card.Body>
-					<div style={{ margin: '30px' }}>
-						<Stack gap={3}>
-							<Stack>
-								<Form.Label className='fw-bold'>Фильтры:</Form.Label>
-								<Stack
-									gap={2}
-									direction='horizontal'
-									className='w-100 flex-wrap'
-								>
-									<Card className='p-3 shadow-sm flex-grow-1'>
-										<Form>
-											<Form.Label className='fw-bold'>
-												Сортировка по алфавиту
-											</Form.Label>
-											<Stack direction='horizontal' gap={3}>
-												<Form.Check
-													type='radio'
-													name='sortOrderAlphabet'
-													label='По возрастанию'
-													id='ascendingTitle'
-													checked={sortOption === 'ascendingTitle'}
-													onChange={() => handleSortChange('ascendingTitle')}
-												/>
-												<Form.Check
-													type='radio'
-													name='sortOrderAlphabet'
-													label='По убыванию'
-													id='descendingTitle'
-													checked={sortOption === 'descendingTitle'}
-													onChange={() => handleSortChange('descendingTitle')}
-												/>
-											</Stack>
-										</Form>
-									</Card>
+		<Container
+			fluid
+			className='d-flex justify-content-center align-items-center'
+			style={{ minHeight: '100vh', paddingTop: '10vh' }}
+		>
+			<Row className='w-100 justify-content-center'>
+				<Col xs={12} md={10} lg={8}>
+					<Card className='card'>
+						<Card.Body>
+							<Stack gap={3} className='m-3'>
+								<Stack>
+									<Form.Label className='fw-bold'>Фильтры:</Form.Label>
+									<Stack
+										direction='horizontal'
+										className='w-100 flex-wrap'
+										gap={1}
+									>
+										<Card
+											className='p-3 shadow-sm flex-grow-1 mt-0'
+											style={{ alignItems: 'flex-start' }}
+										>
+											<Form>
+												<Form.Label className='fw-bold'>
+													Сортировка по алфавиту
+												</Form.Label>
+												<Stack
+													direction='horizontal'
+													gap={3}
+													className='custom-direction'
+													style={{ width: '100%', alignItems: 'flex-start' }}
+												>
+													<Form.Check
+														type='radio'
+														name='sortOrderAlphabet'
+														label='По возрастанию'
+														id='ascendingTitle'
+														checked={sortOption === 'ascendingTitle'}
+														onChange={() => handleSortChange('ascendingTitle')}
+													/>
+													<Form.Check
+														type='radio'
+														name='sortOrderAlphabet'
+														label='По убыванию'
+														id='descendingTitle'
+														checked={sortOption === 'descendingTitle'}
+														onChange={() => handleSortChange('descendingTitle')}
+													/>
+												</Stack>
+											</Form>
+										</Card>
 
-									<Card className='p-3 shadow-sm flex-grow-1'>
-										<Form>
-											<Form.Label className='fw-bold'>
-												Сортировка по времени
-											</Form.Label>
-											<Stack direction='horizontal' gap={3}>
-												<Form.Check
-													type='radio'
-													name='sortOrderTime'
-													label='Сначала новые'
-													id='ascendingDate'
-													checked={sortOption === 'ascendingDate'}
-													onChange={() => handleSortChange('ascendingDate')}
-												/>
-												<Form.Check
-													type='radio'
-													name='sortOrderTime'
-													label='Сначала старые'
-													id='descendingDate'
-													checked={sortOption === 'descendingDate'}
-													onChange={() => handleSortChange('descendingDate')}
-												/>
-											</Stack>
-										</Form>
-									</Card>
+										<Card
+											className='p-3 shadow-sm flex-grow-1 mt-0'
+											style={{ alignItems: 'flex-start' }}
+										>
+											<Form>
+												<Form.Label className='fw-bold'>
+													Сортировка по времени
+												</Form.Label>
+												<Stack
+													direction='horizontal'
+													gap={3}
+													className='custom-direction'
+													style={{ width: '100%', alignItems: 'flex-start' }}
+												>
+													<Form.Check
+														type='radio'
+														name='sortOrderTime'
+														label='Сначала новые'
+														id='ascendingDate'
+														checked={sortOption === 'ascendingDate'}
+														onChange={() => handleSortChange('ascendingDate')}
+													/>
+													<Form.Check
+														type='radio'
+														name='sortOrderTime'
+														label='Сначала старые'
+														id='descendingDate'
+														checked={sortOption === 'descendingDate'}
+														onChange={() => handleSortChange('descendingDate')}
+													/>
+												</Stack>
+											</Form>
+										</Card>
 
-									<Card className='p-3 shadow-sm flex-grow-1'>
-										<Form>
-											<Form.Label className='fw-bold'>
-												Сортировка по сообщениям
-											</Form.Label>
-											<Stack direction='horizontal' gap={3}>
-												<Form.Check
-													type='radio'
-													name='sortOrderMessages'
-													label='По возрастанию'
-													id='ascendingMessages'
-													checked={sortOption === 'ascendingMessages'}
-													onChange={() => handleSortChange('ascendingMessages')}
-												/>
-												<Form.Check
-													type='radio'
-													name='sortOrderMessages'
-													label='По убыванию'
-													id='descendingMessages'
-													checked={sortOption === 'descendingMessages'}
-													onChange={() =>
-														handleSortChange('descendingMessages')
-													}
-												/>
-											</Stack>
-										</Form>
-									</Card>
+										<Card
+											className='p-3 shadow-sm flex-grow-1 mt-0'
+											style={{ alignItems: 'flex-start' }}
+										>
+											<Form>
+												<Form.Label className='fw-bold'>
+													Сортировка по сообщениям
+												</Form.Label>
+												<Stack
+													direction='horizontal'
+													gap={3}
+													className='custom-direction'
+													style={{ width: '100%', alignItems: 'flex-start' }}
+												>
+													<Form.Check
+														type='radio'
+														name='sortOrderMessages'
+														label='По возрастанию'
+														id='ascendingMessages'
+														checked={sortOption === 'ascendingMessages'}
+														onChange={() =>
+															handleSortChange('ascendingMessages')
+														}
+													/>
+													<Form.Check
+														type='radio'
+														name='sortOrderMessages'
+														label='По убыванию'
+														id='descendingMessages'
+														checked={sortOption === 'descendingMessages'}
+														onChange={() =>
+															handleSortChange('descendingMessages')
+														}
+													/>
+												</Stack>
+											</Form>
+										</Card>
 
-									<Card className='p-3 shadow-sm flex-grow-1'>
-										<Form>
-											<Form.Label className='fw-bold'>
-												Сортировка по просмотрам
-											</Form.Label>
-											<Stack direction='horizontal' gap={3}>
-												<Form.Check
-													type='radio'
-													name='sortOrderViews'
-													label='По возрастанию'
-													id='ascendingViews'
-													checked={sortOption === 'ascendingViews'}
-													onChange={() => handleSortChange('ascendingViews')}
-												/>
-												<Form.Check
-													type='radio'
-													name='sortOrderViews'
-													label='По убыванию'
-													id='descendingViews'
-													checked={sortOption === 'descendingViews'}
-													onChange={() => handleSortChange('descendingViews')}
-												/>
-											</Stack>
-										</Form>
-									</Card>
+										<Card
+											className='p-3 shadow-sm flex-grow-1 mt-0'
+											style={{ alignItems: 'flex-start' }}
+										>
+											<Form>
+												<Form.Label className='fw-bold'>
+													Сортировка по просмотрам
+												</Form.Label>
+												<Stack
+													direction='horizontal'
+													gap={3}
+													className='custom-direction'
+													style={{ width: '100%', alignItems: 'flex-start' }}
+												>
+													<Form.Check
+														type='radio'
+														name='sortOrderViews'
+														label='По возрастанию'
+														id='ascendingViews'
+														checked={sortOption === 'ascendingViews'}
+														onChange={() => handleSortChange('ascendingViews')}
+													/>
+													<Form.Check
+														type='radio'
+														name='sortOrderViews'
+														label='По убыванию'
+														id='descendingViews'
+														checked={sortOption === 'descendingViews'}
+														onChange={() => handleSortChange('descendingViews')}
+													/>
+												</Stack>
+											</Form>
+										</Card>
 
-									<Card className='p-3 shadow-sm flex-grow-1'>
-										<Form>
-											<Form.Label className='fw-bold'>
-												Поиск по автору
-											</Form.Label>
-											<Form.Group controlId='formAuthor'>
-												<Form.Control
-													name='author'
-													type='text'
-													placeholder='Введите автора'
-													value={author.author}
-													onChange={handleChanges}
-												/>
-											</Form.Group>
-										</Form>
-									</Card>
+										<Card
+											className='p-3 shadow-sm flex-grow-1 mt-0'
+											style={{ alignItems: 'flex-start' }}
+										>
+											<Form>
+												<Form.Label className='fw-bold'>
+													Поиск по автору
+												</Form.Label>
+												<Form.Group controlId='formAuthor'>
+													<Form.Control
+														name='author'
+														type='text'
+														placeholder='Введите автора'
+														value={author.author}
+														onChange={handleChanges}
+													/>
+												</Form.Group>
+											</Form>
+										</Card>
+									</Stack>
 								</Stack>
-							</Stack>
 
-							<div style={{ maxHeight: '420px', overflowY: 'auto' }}>
-								<Table striped bordered hover>
-									<thead>
-										<tr>
-											<th>Темы</th>
-											<th>Автор</th>
-											<th>Сообщения</th>
-											<th>Просмотры</th>
-											{role === 'SUPER_ADMIN' && <th>Удалить</th>}
-										</tr>
-									</thead>
-									<tbody>
-										{filteredTopics && filteredTopics.length > 0 ? (
-											filteredTopics.map(renderTopics)
-										) : (
+								<div style={{ maxHeight: '420px', overflowY: 'auto' }}>
+									<Table striped bordered hover>
+										<thead>
 											<tr>
-												<td colSpan='4' style={{ textAlign: 'center' }}>
-													Нет доступных тем
-												</td>
+												<th>Темы</th>
+												<th>Автор</th>
+												<th>Сообщения</th>
+												<th>Просмотры</th>
+												{role === 'SUPER_ADMIN' && <th>Удалить</th>}
 											</tr>
-										)}
-									</tbody>
-								</Table>
-							</div>
-						</Stack>
-					</div>
-				</Card.Body>
-			</Card>
-		</div>
+										</thead>
+										<tbody>
+											{filteredTopics && filteredTopics.length > 0 ? (
+												filteredTopics.map(renderTopics)
+											) : (
+												<tr>
+													<td colSpan='4' className='text-center'>
+														Нет доступных тем
+													</td>
+												</tr>
+											)}
+										</tbody>
+									</Table>
+								</div>
+							</Stack>
+						</Card.Body>
+					</Card>
+				</Col>
+			</Row>
+		</Container>
 	)
 }
 

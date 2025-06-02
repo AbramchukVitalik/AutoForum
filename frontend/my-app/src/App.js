@@ -26,43 +26,50 @@ function App() {
 		<Router>
 			<Navbar />
 			<div className='background'>
-				<Routes>
-					<Route path='/' element={<Home />} />
-					<Route path='/login' element={<Login />} />
-					<Route path='/register' element={<Register />} />
-					<Route path='/settings' element={token ? <Settings /> : <Login />} />
-					<Route path='/profile' element={token ? <Profile /> : <Login />} />
-					<Route path='/add_topic' element={token ? <AddTopic /> : <Login />} />
-					<Route
-						path='/add_forum'
-						element={
-							token && decodedToken.role === 'SUPER_ADMIN' ? (
-								<AddForum />
-							) : (
-								<Home />
-							)
-						}
-					/>
-					<Route
-						path='/delete_forum'
-						element={
-							token && decodedToken.role === 'SUPER_ADMIN' ? (
-								<DeleteForum />
-							) : (
-								<Home />
-							)
-						}
-					/>
-					<Route path='/topics' element={<Topics />} />
-					<Route path='/chat' element={<Chat />} />
-					<Route path='/find_topic' element={<FindTopic />} />
-					<Route path='/ban_or_mute' element={<BanOrMute />} />
-					<Route path='/unban_or_unmute' element={<UnbanOrUnmute />} />
-					<Route path='/baned' element={<Baned />} />
-				</Routes>
+				<main>
+					<Routes>
+						<Route path='/' element={<Home />} />
+						<Route path='/login' element={<Login />} />
+						<Route path='/register' element={<Register />} />
+						<Route
+							path='/settings'
+							element={token ? <Settings /> : <Login />}
+						/>
+						<Route path='/profile' element={token ? <Profile /> : <Login />} />
+						<Route
+							path='/add_topic'
+							element={token ? <AddTopic /> : <Login />}
+						/>
+						<Route
+							path='/add_forum'
+							element={
+								token && decodedToken.role === 'SUPER_ADMIN' ? (
+									<AddForum />
+								) : (
+									<Home />
+								)
+							}
+						/>
+						<Route
+							path='/delete_forum'
+							element={
+								token && decodedToken.role === 'SUPER_ADMIN' ? (
+									<DeleteForum />
+								) : (
+									<Home />
+								)
+							}
+						/>
+						<Route path='/topics' element={<Topics />} />
+						<Route path='/chat' element={<Chat />} />
+						<Route path='/find_topic' element={<FindTopic />} />
+						<Route path='/ban_or_mute' element={<BanOrMute />} />
+						<Route path='/unban_or_unmute' element={<UnbanOrUnmute />} />
+						<Route path='/baned' element={<Baned />} />
+					</Routes>
+				</main>
+				<Footer />
 			</div>
-
-			<Footer />
 		</Router>
 	)
 }

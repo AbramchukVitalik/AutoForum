@@ -1,9 +1,8 @@
-import React from 'react'
-import '../css/HomeCard.css'
+import '../css/Card.css'
 
 const Footer = () => {
 	return (
-		<footer className='bg-dark text-light py-4'>
+		<footer className='bg-dark text-light py-4 mt-5'>
 			<div className='container text-center'>
 				<p style={{ color: '#918e90' }}>
 					&copy; 2025 PRIME-LB. Все права защищены.

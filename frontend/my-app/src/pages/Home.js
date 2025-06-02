@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Button, Stack } from 'react-bootstrap'
-import Table from 'react-bootstrap/Table'
+import {
+	Button,
+	Card,
+	Stack,
+	Table,
+	Container,
+	Row,
+	Col,
+} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
 import axios from 'axios'
-import '../css/HomeCard.css'
+import '../css/Card.css'
 
 const Home = () => {
 	const navigate = useNavigate()
@@ -68,53 +75,52 @@ const Home = () => {
 	)
 
 	return (
-		<div className='outer-card'>
-			<Card className='home-card'>
-				<Card.Body>
-					<div style={{ margin: '30px' }} className='inside'>
-						<Stack gap={3}>
-							{role === 'SUPER_ADMIN' && (
-								<div
-									style={{
-										display: 'flex',
-										justifyContent: 'flex-end',
-										marginBottom: '12px',
-									}}
-								>
-									<Button
-										variant='outline-success'
-										onClick={() => handleNavigate('/add_forum')}
-										style={{
-											borderRadius: '8px',
-											whiteSpace: 'nowrap',
-										}}
-									>
-										Добавить форум
-									</Button>
-								</div>
-							)}
+		<Container
+			fluid
+			className='d-flex justify-content-center align-items-center min-vh-100'
+		>
+			<Row className='w-100 justify-content-center'>
+				<Col xs={12} sm={10} md={8} lg={6}>
+					<Card className='card'>
+						<Card.Body>
+							<Stack gap={3} className='m-3'>
+								{role === 'SUPER_ADMIN' && (
+									<div className='d-flex justify-content-end mb-3'>
+										<Button
+											variant='outline-success'
+											onClick={() => handleNavigate('/add_forum')}
+											style={{
+												borderRadius: '8px',
+												whiteSpace: 'nowrap',
+											}}
+										>
+											Добавить форум
+										</Button>
+									</div>
+								)}
 
-							<div
-								style={{ maxHeight: '600px', overflowY: 'auto' }}
-								className='table-responsive'
-							>
-								<Table striped bordered hover responsive>
-									<thead>
-										<tr>
-											<th>Форум</th>
-											<th>Темы</th>
-											<th>Сообщения</th>
-											{role === 'SUPER_ADMIN' && <th>Удалить</th>}
-										</tr>
-									</thead>
-									<tbody>{forums.map(renderForums)}</tbody>
-								</Table>
-							</div>
-						</Stack>
-					</div>
-				</Card.Body>
-			</Card>
-		</div>
+								<div
+									className='table-responsive'
+									style={{ maxHeight: '600px', overflowY: 'auto' }}
+								>
+									<Table striped bordered hover responsive>
+										<thead>
+											<tr>
+												<th>Форум</th>
+												<th>Темы</th>
+												<th>Сообщения</th>
+												{role === 'SUPER_ADMIN' && <th>Удалить</th>}
+											</tr>
+										</thead>
+										<tbody>{forums.map(renderForums)}</tbody>
+									</Table>
+								</div>
+							</Stack>
+						</Card.Body>
+					</Card>
+				</Col>
+			</Row>
+		</Container>
 	)
 }
 
